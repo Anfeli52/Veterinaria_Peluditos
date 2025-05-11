@@ -57,7 +57,7 @@ public class BaseDatos {
         String nameTable = "";
         try {
             nameTable = "profesionales";
-            String sqlString = "INSERT INTO " +nameTable+ " (pnumero_documento, ptipo_documento, pnombre_completo, pdireccion_residencia, pcorreo_electronico, ptelefono) VALUES (?, ?, ?, ?, ?, ?)";
+            String sqlString = "INSERT INTO " +nameTable+ " (numero_documento, tipo_documento, nombre_completo, direccion_residencia, correo_electronico, telefono) VALUES (?, ?, ?, ?, ?, ?)";
             pstm = dbConnection.prepareStatement(sqlString);
             pstm.setInt(1, profesional.getPnumero_documento());
             pstm.setString(2, String.valueOf(profesional.getPtipo_documento()));
