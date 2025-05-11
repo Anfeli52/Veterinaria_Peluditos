@@ -46,14 +46,21 @@ public class GestionarProfesional extends javax.swing.JFrame {
         cbTipo = new javax.swing.JComboBox<>();
         ctNumeroIdentificacion = new javax.swing.JTextField();
         ctNombreCompleto = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        atDireccion = new javax.swing.JTextArea();
         ctCorreo = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
         ctTelefono = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         lblTitulo = new javax.swing.JLabel();
         lblFondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -62,36 +69,75 @@ public class GestionarProfesional extends javax.swing.JFrame {
         jPanel1.setRequestFocusEnabled(false);
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setText("Agregar Profe");
+        jButton1.setBackground(new java.awt.Color(128, 77, 0));
+        jButton1.setFont(new java.awt.Font("Gill Sans Ultra Bold Condensed", 0, 18)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Agregar Profesional");
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 560, 280, 70));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 610, 280, 70));
 
-        cbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CC", "CE", "TI", "RC" }));
-        jPanel1.add(cbTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, 280, 60));
+        cbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CC", "CE", " " }));
+        jPanel1.add(cbTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 410, 280, 50));
 
         ctNumeroIdentificacion.setText("Identificacion");
-        jPanel1.add(ctNumeroIdentificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 280, 60));
+        jPanel1.add(ctNumeroIdentificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 280, 40));
 
         ctNombreCompleto.setText("Nombre");
-        jPanel1.add(ctNombreCompleto, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, 130, 50));
-
-        atDireccion.setColumns(20);
-        atDireccion.setLineWrap(true);
-        atDireccion.setRows(5);
-        atDireccion.setText("Direccion");
-        jScrollPane1.setViewportView(atDireccion);
-
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 420, 280, 100));
+        jPanel1.add(ctNombreCompleto, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 130, 40));
 
         ctCorreo.setText("Correo");
-        jPanel1.add(ctCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, 280, 60));
+        jPanel1.add(ctCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 330, 280, 40));
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jTextArea1.setText("Direccion");
+        jScrollPane2.setViewportView(jTextArea1);
+
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 500, 280, 100));
 
         ctTelefono.setText("Telefono");
-        jPanel1.add(ctTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, 150, 50));
+        jPanel1.add(ctTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 170, 150, 40));
+
+        jLabel4.setFont(new java.awt.Font("Gill Sans Ultra Bold Condensed", 0, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(128, 77, 0));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("NOMBRE");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 130, 30));
+
+        jLabel2.setFont(new java.awt.Font("Gill Sans Ultra Bold Condensed", 0, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(128, 77, 0));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("DIRECCIÓN");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 470, 280, 30));
+
+        jLabel3.setFont(new java.awt.Font("Gill Sans Ultra Bold Condensed", 0, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(128, 77, 0));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("TELÉFONO");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 140, 150, 30));
+
+        jLabel5.setFont(new java.awt.Font("Gill Sans Ultra Bold Condensed", 0, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(128, 77, 0));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("NÚMERO DE IDENTIFICACIÓN");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 280, 30));
+
+        jLabel6.setFont(new java.awt.Font("Gill Sans Ultra Bold Condensed", 0, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(128, 77, 0));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("CORREO ELECTRÓNICO");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 280, 30));
+
+        jLabel7.setFont(new java.awt.Font("Gill Sans Ultra Bold Condensed", 0, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(128, 77, 0));
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setText("TIPO DE DOCUMENTO");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 380, 280, 30));
         jPanel1.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 270, 100));
         jPanel1.add(lblFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 720, 720));
 
@@ -114,7 +160,7 @@ public class GestionarProfesional extends javax.swing.JFrame {
             cedula = Integer.parseInt(ctNumeroIdentificacion.getText());
             tipo_documento = cbTipo.getSelectedItem().toString().charAt(1);
             nombre_completo = ctNombreCompleto.getText();
-            direccion = atDireccion.getText();
+            direccion = lblFondo.getText();
             correo = ctCorreo.getText();
             telefono = ctTelefono.getText();
             //JOptionPane.showMessageDialog(this, tipo_documento);
@@ -196,15 +242,21 @@ public class GestionarProfesional extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextArea atDireccion;
     private javax.swing.JComboBox<String> cbTipo;
     private javax.swing.JTextField ctCorreo;
     private javax.swing.JTextField ctNombreCompleto;
     private javax.swing.JTextField ctNumeroIdentificacion;
     private javax.swing.JTextField ctTelefono;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel lblFondo;
     private javax.swing.JLabel lblTitulo;
     // End of variables declaration//GEN-END:variables
