@@ -4,6 +4,11 @@
  */
 package Modelo;
 
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Arrays;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author anfel
@@ -21,30 +26,32 @@ public class Profesional {
     */
     
     private int pnumero_documento;
-    private char ptipo_documento;
+    private String ptipo_documento;
     private String pnombre_completo;
     private String pdireccion_residencia;
     private String pcorreo_electronico;
     private String ptelefono;
+    private Date pdate;
 
-    public Profesional(int pnumero_documento, char ptipo_documento, String pnombre_completo, String pdireccion_residencia, String pcorreo_electronico, String ptelefono) {
+    public Profesional(int pnumero_documento, String ptipo_documento, String pnombre_completo, String pdireccion_residencia, String pcorreo_electronico, String ptelefono, Date pdate) {
         this.pnumero_documento = pnumero_documento;
         this.ptipo_documento = ptipo_documento;
         this.pnombre_completo = pnombre_completo;
         this.pdireccion_residencia = pdireccion_residencia;
         this.pcorreo_electronico = pcorreo_electronico;
         this.ptelefono = ptelefono;
+        this.pdate = pdate;
     }
 
     public int getPnumero_documento() {
         return pnumero_documento;
     }
 
-    public char getPtipo_documento() {
+    public String getPtipo_documento() {
         return ptipo_documento;
     }
 
-    public void setPtipo_documento(char ptipo_documento) {
+    public void setPtipo_documento(String ptipo_documento) {
         this.ptipo_documento = ptipo_documento;
     }
 
@@ -79,8 +86,35 @@ public class Profesional {
     public void setPtelefono(String ptelefono) {
         this.ptelefono = ptelefono;
     }
+
+    public Date getDate() {
+        return pdate;
+    }
+
     
     
-    
-    
+    //Debo crear el método para crear la contraseña automáticamente
+    public String passwordCreator(){
+        String createdPass = "";
+        String strIdentification = String.valueOf(pnumero_documento);
+        
+        char nameCharacters[] = pnombre_completo.toCharArray();
+        char idCharacters[] = strIdentification.toCharArray();
+        
+        ArrayList<Character> passCharacters = new ArrayList<>();
+        passCharacters.add(nameCharacters[0]);
+        
+        
+        for (int i = idCharacters.length - 3; i < idCharacters.length; i++) {
+            passCharacters.add(idCharacters[i]);
+        }
+        for (int i = 1; i <= 4; i++) {
+            passCharacters.add(nameCharacters[i]);
+        }
+        for (char c : passCharacters) {
+            createdPass += c;
+        }
+
+        return createdPass;
+    }
 }

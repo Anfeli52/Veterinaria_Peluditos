@@ -7,6 +7,8 @@ package Vista;
 import Modelo.Profesional;
 import Controlador.BaseDatos;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.sql.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -19,12 +21,15 @@ public class GestionarProfesional extends javax.swing.JFrame {
 
     Profesional profesional;
     
-    private int cedula;
-    private char tipo_documento;
+    private int identificacion;
+    private String tipo_documento;
     private String nombre_completo;
     private String direccion;
     private String correo;
     private String telefono;
+    private Date date;
+    private SimpleDateFormat dateFormat;
+    private String beginningDate;
     
     public GestionarProfesional() {
         initComponents();
@@ -42,13 +47,13 @@ public class GestionarProfesional extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btnAgregarProfesional = new javax.swing.JButton();
         cbTipo = new javax.swing.JComboBox<>();
         ctNumeroIdentificacion = new javax.swing.JTextField();
         ctNombreCompleto = new javax.swing.JTextField();
         ctCorreo = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        atDireccion = new javax.swing.JTextArea();
         ctTelefono = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -69,38 +74,29 @@ public class GestionarProfesional extends javax.swing.JFrame {
         jPanel1.setRequestFocusEnabled(false);
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setBackground(new java.awt.Color(128, 77, 0));
-        jButton1.setFont(new java.awt.Font("Gill Sans Ultra Bold Condensed", 0, 18)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Agregar Profesional");
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnAgregarProfesional.setBackground(new java.awt.Color(128, 77, 0));
+        btnAgregarProfesional.setFont(new java.awt.Font("Gill Sans Ultra Bold Condensed", 0, 18)); // NOI18N
+        btnAgregarProfesional.setForeground(new java.awt.Color(255, 255, 255));
+        btnAgregarProfesional.setText("Agregar Profesional");
+        btnAgregarProfesional.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAgregarProfesional.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnAgregarProfesionalActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 610, 280, 70));
+        jPanel1.add(btnAgregarProfesional, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 610, 280, 70));
 
-        cbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CC", "CE", " " }));
+        cbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CC", "CE" }));
         jPanel1.add(cbTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 410, 280, 50));
-
-        ctNumeroIdentificacion.setText("Identificacion");
         jPanel1.add(ctNumeroIdentificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 280, 40));
-
-        ctNombreCompleto.setText("Nombre");
         jPanel1.add(ctNombreCompleto, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 130, 40));
-
-        ctCorreo.setText("Correo");
         jPanel1.add(ctCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 330, 280, 40));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setText("Direccion");
-        jScrollPane2.setViewportView(jTextArea1);
+        atDireccion.setColumns(20);
+        atDireccion.setRows(5);
+        jScrollPane2.setViewportView(atDireccion);
 
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 500, 280, 100));
-
-        ctTelefono.setText("Telefono");
         jPanel1.add(ctTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 170, 150, 40));
 
         jLabel4.setFont(new java.awt.Font("Gill Sans Ultra Bold Condensed", 0, 18)); // NOI18N
@@ -155,38 +151,35 @@ public class GestionarProfesional extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnAgregarProfesionalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProfesionalActionPerformed
         try {
-            cedula = Integer.parseInt(ctNumeroIdentificacion.getText());
-            tipo_documento = cbTipo.getSelectedItem().toString().charAt(1);
+            identificacion = Integer.parseInt(ctNumeroIdentificacion.getText());
+            tipo_documento = (String) cbTipo.getSelectedItem();
             nombre_completo = ctNombreCompleto.getText();
-            direccion = lblFondo.getText();
+            direccion = atDireccion.getText();
             correo = ctCorreo.getText();
             telefono = ctTelefono.getText();
-            //JOptionPane.showMessageDialog(this, tipo_documento);
-            
-            
+            date = new Date(System.currentTimeMillis());
+            dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+
             try {
-                /*JOptionPane.showMessageDialog(this, "Cedula: "+cedula
-                    +"\nTipo Documento: " +tipo_documento
-                    +"\nNombre Completo: " +nombre_completo
-                    +"\nDirección: " +direccion
-                    +"\nCorreo: " +correo
-                    +"\nTeléfono: " +telefono
-                    
-                );*/
-                
-                profesional = new Profesional(cedula, tipo_documento, nombre_completo, direccion, correo, telefono);
+                profesional = new Profesional(identificacion, tipo_documento, nombre_completo, direccion, correo, telefono, date);
                 
                 BaseDatos bd = new BaseDatos();
                 boolean conexion;
-                boolean insercion;
+                boolean insert;
                 
                 conexion = bd.crearConexion();
                 if(conexion){
-                    insercion = bd.insertarProfesional(profesional);
-                    if(insercion){
+                    insert = bd.insertarProfesional(profesional);
+                    if(insert){
                         JOptionPane.showMessageDialog(this, "!!!Se agregó el Profesional correctamente!!!");
+                        ctCorreo.setText("");
+                        ctNumeroIdentificacion.setText("");
+                        ctNombreCompleto.setText("");
+                        ctTelefono.setText("");
+                        atDireccion.setText("");
+                        
                     }else{
                         JOptionPane.showMessageDialog(this, "!!!Inserción fallida!!!");
                     }
@@ -204,50 +197,17 @@ public class GestionarProfesional extends javax.swing.JFrame {
         }
        
        
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnAgregarProfesionalActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GestionarProfesional.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GestionarProfesional.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GestionarProfesional.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GestionarProfesional.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GestionarProfesional().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea atDireccion;
+    private javax.swing.JButton btnAgregarProfesional;
     private javax.swing.JComboBox<String> cbTipo;
     private javax.swing.JTextField ctCorreo;
     private javax.swing.JTextField ctNombreCompleto;
     private javax.swing.JTextField ctNumeroIdentificacion;
     private javax.swing.JTextField ctTelefono;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -256,7 +216,6 @@ public class GestionarProfesional extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel lblFondo;
     private javax.swing.JLabel lblTitulo;
     // End of variables declaration//GEN-END:variables
