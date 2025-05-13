@@ -5,15 +5,12 @@
 package Modelo;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Arrays;
-import javax.swing.JOptionPane;
 
 /**
  *
  * @author anfel
  */
-public class Profesional {
+public class Propietario {
     
     private int pnumero_documento;
     private String ptipo_documento;
@@ -23,7 +20,7 @@ public class Profesional {
     private String ptelefono;
     private Date pdate;
 
-    public Profesional(int pnumero_documento, String ptipo_documento, String pnombre_completo, String pdireccion_residencia, String pcorreo_electronico, String ptelefono, Date pdate) {
+    public Propietario(int pnumero_documento, String ptipo_documento, String pnombre_completo, String pdireccion_residencia, String pcorreo_electronico, String ptelefono, Date pdate) {
         this.pnumero_documento = pnumero_documento;
         this.ptipo_documento = ptipo_documento;
         this.pnombre_completo = pnombre_completo;
@@ -77,34 +74,9 @@ public class Profesional {
         this.ptelefono = ptelefono;
     }
 
-    public Date getDate() {
+    public Date getPdate() {
         return pdate;
-    }
-
+    }    
     
     
-    //Debo crear el método para crear la contraseña automáticamente
-    public String passwordCreator(){
-        String createdPass = "";
-        String strIdentification = String.valueOf(pnumero_documento);
-        
-        char nameCharacters[] = pnombre_completo.toCharArray();
-        char idCharacters[] = strIdentification.toCharArray();
-        
-        ArrayList<Character> passCharacters = new ArrayList<>();
-        passCharacters.add(nameCharacters[0]);
-        
-        
-        for (int i = idCharacters.length - 3; i < idCharacters.length; i++) {
-            passCharacters.add(idCharacters[i]);
-        }
-        for (int i = 1; i <= 4; i++) {
-            passCharacters.add(nameCharacters[i]);
-        }
-        for (char c : passCharacters) {
-            createdPass += c;
-        }
-
-        return createdPass;
-    }
 }

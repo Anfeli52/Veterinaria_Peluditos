@@ -119,7 +119,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="99" green="99" red="99" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="**********"/>
+            <Property name="text" type="java.lang.String" value="papita123"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="null"/>
             </Property>
@@ -165,7 +165,7 @@
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="lblLoginIcon" alignment="0" max="32767" attributes="0"/>
+                  <Component id="lblLoginIcon" alignment="1" pref="500" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>

@@ -22,10 +22,12 @@ public class Login extends javax.swing.JFrame {
      */
     String correo, password;
     private int xMouse, yMouse;
+    private final BaseDatos bd;
     
     public Login() {
         initComponents();
-        rsscalelabel.RSScaleLabel.setScaleLabel(lblLoginIcon, "src/Vista/PerritoLogin.jpg");
+        rsscalelabel.RSScaleLabel.setScaleLabel(lblLoginIcon, "src/Vista/Imagenes/PerritoLogin.jpg");
+        bd = new BaseDatos();
     }
 
     /**
@@ -86,7 +88,7 @@ public class Login extends javax.swing.JFrame {
 
         ctContrasena.setBackground(new java.awt.Color(255, 255, 255));
         ctContrasena.setForeground(new java.awt.Color(153, 153, 153));
-        ctContrasena.setText("**********");
+        ctContrasena.setText("papita123");
         ctContrasena.setBorder(null);
         ctContrasena.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -108,7 +110,7 @@ public class Login extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblLoginIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lblLoginIcon, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
         );
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 0, 310, 500));
@@ -266,7 +268,6 @@ public class Login extends javax.swing.JFrame {
             password = String.valueOf(ctContrasena.getPassword());
             
             try {
-                BaseDatos bd = new BaseDatos();
                 boolean conexion;
                 boolean select;
                 
@@ -275,8 +276,15 @@ public class Login extends javax.swing.JFrame {
                     select = bd.buscarProfesional(correo, password);
                     if(select){
                         setVisible(false);
+                        /*
                         GestionarProfesional gestionarProfesional = new GestionarProfesional();
                         gestionarProfesional.setVisible(true);
+                        */
+                        
+                        
+                        MenuProfesional menuProfesional = new MenuProfesional();
+                        menuProfesional.setVisible(true);
+                        
                     }
                     
                 }else{
@@ -301,6 +309,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_lblLogInMouseExited
 
     private void lblExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExitMouseClicked
+        bd.cerrarConexion();
         System.exit(0);
     }//GEN-LAST:event_lblExitMouseClicked
 

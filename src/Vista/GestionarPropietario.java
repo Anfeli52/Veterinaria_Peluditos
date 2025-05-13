@@ -4,8 +4,8 @@
  */
 package Vista;
 
-import Modelo.Profesional;
 import Controlador.BaseDatos;
+import Modelo.Propietario;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -18,9 +18,9 @@ import javax.swing.JOptionPane;
  *
  * @author anfel
  */
-public class GestionarProfesional extends javax.swing.JFrame {
+public class GestionarPropietario extends javax.swing.JFrame {
 
-    Profesional profesional;
+    Propietario propietario;
     
     private int identificacion;
     private String tipo_documento;
@@ -34,10 +34,8 @@ public class GestionarProfesional extends javax.swing.JFrame {
     
     private int xMouse, yMouse;
     
-    public GestionarProfesional() {
+    public GestionarPropietario() {
         initComponents();
-        rsscalelabel.RSScaleLabel.setScaleLabel(lblFondo, "src/Vista/Imagenes/FondoPeluditosRegisterProfesional.jpg");
-        rsscalelabel.RSScaleLabel.setScaleLabel(lblTitulo, "src/Vista/Imagenes/Titulo.png");
         bd = new BaseDatos();
     }
 
@@ -51,107 +49,33 @@ public class GestionarProfesional extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        btnAgregarProfesional = new javax.swing.JButton();
-        cbTipo = new javax.swing.JComboBox<>();
-        ctNumeroIdentificacion = new javax.swing.JTextField();
-        ctNombreCompleto = new javax.swing.JTextField();
-        ctCorreo = new javax.swing.JTextField();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        atDireccion = new javax.swing.JTextArea();
-        ctTelefono = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        lblTitulo = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         exitBtn = new javax.swing.JPanel();
         lblExit = new javax.swing.JLabel();
-        lblFondo = new javax.swing.JLabel();
+        ctNombreCompleto = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        ctTelefono = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        ctNumeroIdentificacion = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        ctCorreo = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        cbTipo = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        atDireccion = new javax.swing.JTextArea();
+        btnAgregarPropietario = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(720, 720));
         setUndecorated(true);
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel1.setMinimumSize(new java.awt.Dimension(720, 720));
         jPanel1.setPreferredSize(new java.awt.Dimension(720, 720));
-        jPanel1.setRequestFocusEnabled(false);
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        btnAgregarProfesional.setBackground(new java.awt.Color(128, 77, 0));
-        btnAgregarProfesional.setFont(new java.awt.Font("Gill Sans Ultra Bold Condensed", 0, 18)); // NOI18N
-        btnAgregarProfesional.setForeground(new java.awt.Color(255, 255, 255));
-        btnAgregarProfesional.setText("Agregar Profesional");
-        btnAgregarProfesional.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnAgregarProfesional.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarProfesionalActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnAgregarProfesional, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 620, 280, 70));
-
-        cbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CC", "CE" }));
-        jPanel1.add(cbTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 420, 280, 50));
-
-        ctNumeroIdentificacion.setText("000012384");
-        jPanel1.add(ctNumeroIdentificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 280, 40));
-
-        ctNombreCompleto.setText("Venus");
-        jPanel1.add(ctNombreCompleto, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, 130, 40));
-
-        ctCorreo.setText("venusa99@gmail.com");
-        jPanel1.add(ctCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 340, 280, 40));
-
-        atDireccion.setColumns(20);
-        atDireccion.setRows(5);
-        atDireccion.setText("Calle 123I #38E-321");
-        jScrollPane2.setViewportView(atDireccion);
-
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 510, 280, 100));
-
-        ctTelefono.setText("1234567890");
-        jPanel1.add(ctTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 180, 130, 40));
-
-        jLabel4.setFont(new java.awt.Font("Gill Sans Ultra Bold Condensed", 0, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(128, 77, 0));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("NOMBRE");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, 130, 30));
-
-        jLabel2.setFont(new java.awt.Font("Gill Sans Ultra Bold Condensed", 0, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(128, 77, 0));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("DIRECCIÓN");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 480, 280, 30));
-
-        jLabel3.setFont(new java.awt.Font("Gill Sans Ultra Bold Condensed", 0, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(128, 77, 0));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("TELÉFONO");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 150, 130, 30));
-
-        jLabel5.setFont(new java.awt.Font("Gill Sans Ultra Bold Condensed", 0, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(128, 77, 0));
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("NÚMERO DE IDENTIFICACIÓN");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, 280, 30));
-
-        jLabel6.setFont(new java.awt.Font("Gill Sans Ultra Bold Condensed", 0, 18)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(128, 77, 0));
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("CORREO ELECTRÓNICO");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 280, 30));
-
-        jLabel7.setFont(new java.awt.Font("Gill Sans Ultra Bold Condensed", 0, 18)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(128, 77, 0));
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("TIPO DE DOCUMENTO");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 390, 280, 30));
-        jPanel1.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 270, 100));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -215,67 +139,90 @@ public class GestionarProfesional extends javax.swing.JFrame {
         );
 
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 720, 40));
-        jPanel1.add(lblFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 720, 720));
+
+        ctNombreCompleto.setText("Venus");
+        jPanel1.add(ctNombreCompleto, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, 130, 40));
+
+        jLabel4.setFont(new java.awt.Font("Gill Sans Ultra Bold Condensed", 0, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(128, 77, 0));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("NOMBRE");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, 130, 30));
+
+        jLabel3.setFont(new java.awt.Font("Gill Sans Ultra Bold Condensed", 0, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(128, 77, 0));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("TELÉFONO");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 150, 130, 30));
+
+        ctTelefono.setText("1234567890");
+        jPanel1.add(ctTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 180, 130, 40));
+
+        jLabel5.setFont(new java.awt.Font("Gill Sans Ultra Bold Condensed", 0, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(128, 77, 0));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("NÚMERO DE IDENTIFICACIÓN");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, 280, 30));
+
+        ctNumeroIdentificacion.setText("000012383");
+        jPanel1.add(ctNumeroIdentificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 280, 40));
+
+        jLabel6.setFont(new java.awt.Font("Gill Sans Ultra Bold Condensed", 0, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(128, 77, 0));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("CORREO ELECTRÓNICO");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 280, 30));
+
+        ctCorreo.setText("venusa99@gmail.com");
+        jPanel1.add(ctCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 340, 280, 40));
+
+        jLabel7.setFont(new java.awt.Font("Gill Sans Ultra Bold Condensed", 0, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(128, 77, 0));
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setText("TIPO DE DOCUMENTO");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 390, 280, 30));
+
+        cbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CC", "CE" }));
+        jPanel1.add(cbTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 420, 280, 50));
+
+        jLabel2.setFont(new java.awt.Font("Gill Sans Ultra Bold Condensed", 0, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(128, 77, 0));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("DIRECCIÓN");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 480, 280, 30));
+
+        atDireccion.setColumns(20);
+        atDireccion.setRows(5);
+        atDireccion.setText("Calle 321H 33F-90");
+        jScrollPane2.setViewportView(atDireccion);
+
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 510, 280, 100));
+
+        btnAgregarPropietario.setBackground(new java.awt.Color(128, 77, 0));
+        btnAgregarPropietario.setFont(new java.awt.Font("Gill Sans Ultra Bold Condensed", 0, 18)); // NOI18N
+        btnAgregarPropietario.setForeground(new java.awt.Color(255, 255, 255));
+        btnAgregarPropietario.setText("Agregar Propietario");
+        btnAgregarPropietario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAgregarPropietario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarPropietarioActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnAgregarPropietario, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 620, 280, 70));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 720, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 720, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnAgregarProfesionalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProfesionalActionPerformed
-        try {
-            identificacion = Integer.parseInt(ctNumeroIdentificacion.getText());
-            tipo_documento = (String) cbTipo.getSelectedItem();
-            nombre_completo = ctNombreCompleto.getText();
-            direccion = atDireccion.getText();
-            correo = ctCorreo.getText();
-            telefono = ctTelefono.getText();
-            date = new Date(System.currentTimeMillis());
-            dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-
-            try {
-                profesional = new Profesional(identificacion, tipo_documento, nombre_completo, direccion, correo, telefono, date);
-                
-                boolean conexion;
-                boolean insert;
-                
-                conexion = bd.crearConexion();
-                if(conexion){
-                    insert = bd.insertarProfesional(profesional);
-                    if(insert){
-                        JOptionPane.showMessageDialog(this, "!!!Se agregó el Profesional correctamente!!!");
-                        ctCorreo.setText("");
-                        ctNumeroIdentificacion.setText("");
-                        ctNombreCompleto.setText("");
-                        ctTelefono.setText("");
-                        atDireccion.setText("");
-                        
-                    }else{
-                        JOptionPane.showMessageDialog(this, "!!!Inserción fallida!!!");
-                    }
-                }else{
-                    JOptionPane.showMessageDialog(this, "!!!Conexión con la Base de Datos Fallida!!!");
-                }
-                
-                
-            } catch (SQLException ex) {
-                Logger.getLogger(GestionarProfesional.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Los datos no corresponden con su tipo de dato");
-        }
-       
-    }//GEN-LAST:event_btnAgregarProfesionalActionPerformed
 
     private void lblExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExitMouseClicked
         setVisible(false);
@@ -302,10 +249,59 @@ public class GestionarProfesional extends javax.swing.JFrame {
         yMouse = evt.getY();
     }//GEN-LAST:event_jPanel4MousePressed
 
+    private void btnAgregarPropietarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarPropietarioActionPerformed
+        try {
+            identificacion = Integer.parseInt(ctNumeroIdentificacion.getText());
+            tipo_documento = (String) cbTipo.getSelectedItem();
+            nombre_completo = ctNombreCompleto.getText();
+            direccion = atDireccion.getText();
+            correo = ctCorreo.getText();
+            telefono = ctTelefono.getText();
+            date = new Date(System.currentTimeMillis());
+            dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+
+            try {
+                propietario = new Propietario(identificacion, tipo_documento, nombre_completo, direccion, correo, telefono, date);
+                
+                boolean conexion;
+                boolean insert;
+                
+                conexion = bd.crearConexion();
+                if(conexion){
+                    insert = bd.insertarPropietario(propietario);
+                    if(insert){
+                        JOptionPane.showMessageDialog(this, "!!!Se agregó el Propietario correctamente!!!");
+                        ctCorreo.setText("");
+                        ctNumeroIdentificacion.setText("");
+                        ctNombreCompleto.setText("");
+                        ctTelefono.setText("");
+                        atDireccion.setText("");
+                        
+                    } else{
+                        JOptionPane.showMessageDialog(this, "!!!Inserción fallida!!!");
+                    }
+                } else{
+                    JOptionPane.showMessageDialog(this, "!!!Conexión con la Base de Datos Fallida!!!");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(GestionarPropietario.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Los datos no corresponden con su tipo de dato");
+        }
+            
+            
+            
+        
+
+    }//GEN-LAST:event_btnAgregarPropietarioActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea atDireccion;
-    private javax.swing.JButton btnAgregarProfesional;
+    private javax.swing.JButton btnAgregarPropietario;
     private javax.swing.JComboBox<String> cbTipo;
     private javax.swing.JTextField ctCorreo;
     private javax.swing.JTextField ctNombreCompleto;
@@ -322,7 +318,5 @@ public class GestionarProfesional extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblExit;
-    private javax.swing.JLabel lblFondo;
-    private javax.swing.JLabel lblTitulo;
     // End of variables declaration//GEN-END:variables
 }
