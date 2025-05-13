@@ -248,42 +248,43 @@ public class GestionarPropietario extends javax.swing.JFrame {
 
     private void btnAgregarPropietarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarPropietarioActionPerformed
         try {
-            identificacion = Integer.parseInt(ctNumeroIdentificacion.getText());
-            tipo_documento = (String) cbTipo.getSelectedItem();
-            nombre_completo = ctNombreCompleto.getText();
-            direccion = atDireccion.getText();
-            correo = ctCorreo.getText();
-            telefono = ctTelefono.getText();
-            date = new Date(System.currentTimeMillis());
-            dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+            if(!(ctNumeroIdentificacion.getText().isEmpty()|| ctNombreCompleto.getText().isEmpty() || atDireccion.getText().isEmpty() || ctCorreo.getText().isEmpty() || ctTelefono.getText().isEmpty())){
+                identificacion = Integer.parseInt(ctNumeroIdentificacion.getText());
+                tipo_documento = (String) cbTipo.getSelectedItem();
+                nombre_completo = ctNombreCompleto.getText();
+                direccion = atDireccion.getText();
+                correo = ctCorreo.getText();
+                telefono = ctTelefono.getText();
+                date = new Date(System.currentTimeMillis());
+                dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 
-            try {
-                propietario = new Propietario(identificacion, tipo_documento, nombre_completo, direccion, correo, telefono, date);
-                
-                boolean conexion;
-                boolean insert;
-                
-                conexion = bd.crearConexion();
-                if(conexion){
-                    insert = bd.insertarPropietario(propietario);
-                    if(insert){
-                        JOptionPane.showMessageDialog(this, "!!!Se agregó el Propietario correctamente!!!");
-                        ctCorreo.setText("");
-                        ctNumeroIdentificacion.setText("");
-                        ctNombreCompleto.setText("");
-                        ctTelefono.setText("");
-                        atDireccion.setText("");
-                        
+                try {
+                    propietario = new Propietario(identificacion, tipo_documento, nombre_completo, direccion, correo, telefono, date);
+
+                    boolean conexion;
+                    boolean insert;
+
+                    conexion = bd.crearConexion();
+                    if(conexion){
+                        insert = bd.insertarPropietario(propietario);
+                        if(insert){
+                            JOptionPane.showMessageDialog(this, "!!!Se agregó el Propietario correctamente!!!");
+                            ctCorreo.setText("");
+                            ctNumeroIdentificacion.setText("");
+                            ctNombreCompleto.setText("");
+                            ctTelefono.setText("");
+                            atDireccion.setText("");
+
+                        } else{
+                            JOptionPane.showMessageDialog(this, "!!!Inserción fallida!!!");
+                        }
                     } else{
-                        JOptionPane.showMessageDialog(this, "!!!Inserción fallida!!!");
+                        JOptionPane.showMessageDialog(this, "!!!Conexión con la Base de Datos Fallida!!!");
                     }
-                } else{
-                    JOptionPane.showMessageDialog(this, "!!!Conexión con la Base de Datos Fallida!!!");
+                } catch (SQLException ex) {
+                    Logger.getLogger(GestionarPropietario.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } catch (SQLException ex) {
-                Logger.getLogger(GestionarPropietario.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
             
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Los datos no corresponden con su tipo de dato");

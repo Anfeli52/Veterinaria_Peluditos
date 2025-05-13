@@ -42,7 +42,7 @@ public class BaseDatos {
         nameDB = "veterinaria_corp";
         user = "root";
         pwd = "root";
-        port = 3307;
+        port = 3306;
         
         
         try {

@@ -224,44 +224,47 @@ public class GestionarProfesional extends javax.swing.JFrame {
 
     private void btnAgregarProfesionalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProfesionalActionPerformed
         try {
-            identificacion = Long.parseLong(ctNumeroIdentificacion.getText());
-            tipo_documento = (String) cbTipo.getSelectedItem();
-            nombre_completo = ctNombreCompleto.getText();
-            direccion = atDireccion.getText();
-            correo = ctCorreo.getText();
-            telefono = ctTelefono.getText();
-            date = new Date(System.currentTimeMillis());
-            dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+            if(!(ctNumeroIdentificacion.getText().isEmpty()|| ctNombreCompleto.getText().isEmpty() || atDireccion.getText().isEmpty() || ctCorreo.getText().isEmpty() || ctTelefono.getText().isEmpty())){
+                identificacion = Long.parseLong(ctNumeroIdentificacion.getText());
+                tipo_documento = (String) cbTipo.getSelectedItem();
+                nombre_completo = ctNombreCompleto.getText();
+                direccion = atDireccion.getText();
+                correo = ctCorreo.getText();
+                telefono = ctTelefono.getText();
+                date = new Date(System.currentTimeMillis());
+                dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 
-            try {
-                profesional = new Profesional(identificacion, tipo_documento, nombre_completo, direccion, correo, telefono, date);
-                
-                boolean conexion;
-                boolean insert;
-                
-                conexion = bd.crearConexion();
-                if(conexion){
-                    insert = bd.insertarProfesional(profesional);
-                    if(insert){
-                        JOptionPane.showMessageDialog(this, "!!!Se agregó el Profesional correctamente!!!");
-                        ctCorreo.setText("");
-                        ctNumeroIdentificacion.setText("");
-                        ctNombreCompleto.setText("");
-                        ctTelefono.setText("");
-                        atDireccion.setText("");
-                        
+
+                 try {
+                    profesional = new Profesional(identificacion, tipo_documento, nombre_completo, direccion, correo, telefono, date);
+
+                    boolean conexion;
+                    boolean insert;
+
+                    conexion = bd.crearConexion();
+                    if(conexion){
+                        insert = bd.insertarProfesional(profesional);
+                        if(insert){
+                            JOptionPane.showMessageDialog(this, "!!!Se agregó el Profesional correctamente!!!");
+                            ctCorreo.setText("");
+                            ctNumeroIdentificacion.setText("");
+                            ctNombreCompleto.setText("");
+                            ctTelefono.setText("");
+                            atDireccion.setText("");
+
+                        }else{
+                            JOptionPane.showMessageDialog(this, "!!!Inserción fallida!!!");
+                        }
                     }else{
-                        JOptionPane.showMessageDialog(this, "!!!Inserción fallida!!!");
+                        JOptionPane.showMessageDialog(this, "!!!Conexión con la Base de Datos Fallida!!!");
                     }
-                }else{
-                    JOptionPane.showMessageDialog(this, "!!!Conexión con la Base de Datos Fallida!!!");
+
+                } catch (SQLException ex) {
+                    Logger.getLogger(GestionarProfesional.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
-                
-            } catch (SQLException ex) {
-                Logger.getLogger(GestionarProfesional.class.getName()).log(Level.SEVERE, null, ex);
+            } else {
+                JOptionPane.showMessageDialog(this, "Algún valor está vacío");
             }
-            
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Los datos no corresponden con su tipo de dato");
         }
