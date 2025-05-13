@@ -30,6 +30,7 @@ public class Login extends javax.swing.JFrame {
         bd = new BaseDatos();
         JOptionPane.showMessageDialog(this, "Correo Predeterminado: andres@gmail.com"
                 + "\nContraseña Predeterminada: papita123");
+        JOptionPane.showMessageDialog(this, "Verificar el Puerto antes de iniciar el programa, por defecto está en el 3307");
     }
 
     /**

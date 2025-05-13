@@ -32,7 +32,7 @@ public class BaseDatos {
     private static String pwd;
     private static PreparedStatement pstm;
     private static ResultSet rs;
-    
+    private static int port;
     
     public BaseDatos(){
         
@@ -42,11 +42,12 @@ public class BaseDatos {
         nameDB = "veterinaria_corp";
         user = "root";
         pwd = "root";
+        port = 3307;
         
         
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            String sourceURL = "jdbc:mysql://localhost:3307/" + nameDB; //El significado del :3307 es que yo no tengo la conexión de la base de datos que trabajamos en el Puerto 3306, sino que en el 3307
+            String sourceURL = "jdbc:mysql://localhost:"+port+"/" + nameDB; //El significado del :3307 es que yo no tengo la conexión de la base de datos que trabajamos en el Puerto 3306, sino que en el 3307
             
             dbConnection = DriverManager.getConnection(sourceURL, user, pwd);
             System.out.println("!! Conexion con la base de datos " + nameDB + " establecida exitosamente !!");

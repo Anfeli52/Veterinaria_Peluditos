@@ -37,6 +37,8 @@ public class GestionarPropietario extends javax.swing.JFrame {
     public GestionarPropietario() {
         initComponents();
         bd = new BaseDatos();
+        rsscalelabel.RSScaleLabel.setScaleLabel(lblFondo, "src/Vista/Imagenes/FondoPeluditosRegisterPropietario.png");
+        rsscalelabel.RSScaleLabel.setScaleLabel(lblTitulo, "src/Vista/Imagenes/Titulo.png");
     }
 
     /**
@@ -66,6 +68,8 @@ public class GestionarPropietario extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         atDireccion = new javax.swing.JTextArea();
         btnAgregarPropietario = new javax.swing.JButton();
+        lblTitulo = new javax.swing.JLabel();
+        lblFondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(720, 720));
@@ -139,8 +143,6 @@ public class GestionarPropietario extends javax.swing.JFrame {
         );
 
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 720, 40));
-
-        ctNombreCompleto.setText("Venus");
         jPanel1.add(ctNombreCompleto, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, 130, 40));
 
         jLabel4.setFont(new java.awt.Font("Gill Sans Ultra Bold Condensed", 0, 18)); // NOI18N
@@ -154,8 +156,6 @@ public class GestionarPropietario extends javax.swing.JFrame {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("TELÉFONO");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 150, 130, 30));
-
-        ctTelefono.setText("1234567890");
         jPanel1.add(ctTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 180, 130, 40));
 
         jLabel5.setFont(new java.awt.Font("Gill Sans Ultra Bold Condensed", 0, 18)); // NOI18N
@@ -163,8 +163,6 @@ public class GestionarPropietario extends javax.swing.JFrame {
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("NÚMERO DE IDENTIFICACIÓN");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, 280, 30));
-
-        ctNumeroIdentificacion.setText("000012383");
         jPanel1.add(ctNumeroIdentificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 280, 40));
 
         jLabel6.setFont(new java.awt.Font("Gill Sans Ultra Bold Condensed", 0, 18)); // NOI18N
@@ -172,8 +170,6 @@ public class GestionarPropietario extends javax.swing.JFrame {
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("CORREO ELECTRÓNICO");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 280, 30));
-
-        ctCorreo.setText("venusa99@gmail.com");
         jPanel1.add(ctCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 340, 280, 40));
 
         jLabel7.setFont(new java.awt.Font("Gill Sans Ultra Bold Condensed", 0, 18)); // NOI18N
@@ -193,7 +189,6 @@ public class GestionarPropietario extends javax.swing.JFrame {
 
         atDireccion.setColumns(20);
         atDireccion.setRows(5);
-        atDireccion.setText("Calle 321H 33F-90");
         jScrollPane2.setViewportView(atDireccion);
 
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 510, 280, 100));
@@ -209,6 +204,8 @@ public class GestionarPropietario extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnAgregarPropietario, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 620, 280, 70));
+        jPanel1.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 270, 100));
+        jPanel1.add(lblFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 720, 720));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -318,5 +315,7 @@ public class GestionarPropietario extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblExit;
+    private javax.swing.JLabel lblFondo;
+    private javax.swing.JLabel lblTitulo;
     // End of variables declaration//GEN-END:variables
 }

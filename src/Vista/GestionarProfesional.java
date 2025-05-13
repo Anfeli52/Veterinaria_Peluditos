@@ -96,24 +96,15 @@ public class GestionarProfesional extends javax.swing.JFrame {
 
         cbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CC", "CE" }));
         jPanel1.add(cbTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 420, 280, 50));
-
-        ctNumeroIdentificacion.setText("000012384");
         jPanel1.add(ctNumeroIdentificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 280, 40));
-
-        ctNombreCompleto.setText("Venus");
         jPanel1.add(ctNombreCompleto, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, 130, 40));
-
-        ctCorreo.setText("venusa99@gmail.com");
         jPanel1.add(ctCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 340, 280, 40));
 
         atDireccion.setColumns(20);
         atDireccion.setRows(5);
-        atDireccion.setText("Calle 123I #38E-321");
         jScrollPane2.setViewportView(atDireccion);
 
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 510, 280, 100));
-
-        ctTelefono.setText("1234567890");
         jPanel1.add(ctTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 180, 130, 40));
 
         jLabel4.setFont(new java.awt.Font("Gill Sans Ultra Bold Condensed", 0, 18)); // NOI18N
