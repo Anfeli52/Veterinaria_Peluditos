@@ -299,6 +299,11 @@ public class MenuProfesional extends javax.swing.JFrame {
         });
 
         btnActualizar.setText("Actualizar");
+        btnActualizar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnActualizarMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -446,6 +451,14 @@ public class MenuProfesional extends javax.swing.JFrame {
         bd.cerrarConexion();
         System.exit(0);
     }//GEN-LAST:event_lblCerrarSesionMouseClicked
+
+    private void btnActualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarMouseClicked
+        if(btnAgregarProfesional.getText().equals("Agregar Profesional")){
+            bd.mostrarProfesionales(tblProfesionales);
+        } else{
+            bd.mostrarPropietarios(tblProfesionales);
+        }
+    }//GEN-LAST:event_btnActualizarMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

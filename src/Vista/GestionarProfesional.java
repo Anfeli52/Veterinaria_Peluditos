@@ -22,7 +22,7 @@ public class GestionarProfesional extends javax.swing.JFrame {
 
     Profesional profesional;
     
-    private int identificacion;
+    private long identificacion;
     private String tipo_documento;
     private String nombre_completo;
     private String direccion;
@@ -233,7 +233,7 @@ public class GestionarProfesional extends javax.swing.JFrame {
 
     private void btnAgregarProfesionalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProfesionalActionPerformed
         try {
-            identificacion = Integer.parseInt(ctNumeroIdentificacion.getText());
+            identificacion = Long.parseLong(ctNumeroIdentificacion.getText());
             tipo_documento = (String) cbTipo.getSelectedItem();
             nombre_completo = ctNombreCompleto.getText();
             direccion = atDireccion.getText();

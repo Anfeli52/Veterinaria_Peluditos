@@ -28,6 +28,8 @@ public class Login extends javax.swing.JFrame {
         initComponents();
         rsscalelabel.RSScaleLabel.setScaleLabel(lblLoginIcon, "src/Vista/Imagenes/PerritoLogin.jpg");
         bd = new BaseDatos();
+        JOptionPane.showMessageDialog(this, "Correo Predeterminado: andres@gmail.com"
+                + "\nContraseña Predeterminada: papita123");
     }
 
     /**

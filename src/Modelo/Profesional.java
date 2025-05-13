@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
  */
 public class Profesional {
     
-    private int pnumero_documento;
+    private long pnumero_documento;
     private String ptipo_documento;
     private String pnombre_completo;
     private String pdireccion_residencia;
@@ -23,7 +23,7 @@ public class Profesional {
     private String ptelefono;
     private Date pdate;
 
-    public Profesional(int pnumero_documento, String ptipo_documento, String pnombre_completo, String pdireccion_residencia, String pcorreo_electronico, String ptelefono, Date pdate) {
+    public Profesional(long pnumero_documento, String ptipo_documento, String pnombre_completo, String pdireccion_residencia, String pcorreo_electronico, String ptelefono, Date pdate) {
         this.pnumero_documento = pnumero_documento;
         this.ptipo_documento = ptipo_documento;
         this.pnombre_completo = pnombre_completo;
@@ -33,7 +33,7 @@ public class Profesional {
         this.pdate = pdate;
     }
 
-    public int getPnumero_documento() {
+    public long getPnumero_documento() {
         return pnumero_documento;
     }
 
@@ -81,26 +81,30 @@ public class Profesional {
         return pdate;
     }
 
-    
-    
+
     //Debo crear el método para crear la contraseña automáticamente
-    public String passwordCreator(){
+    public String passwordCreator() {
         String createdPass = "";
         String strIdentification = String.valueOf(pnumero_documento);
-        
-        char nameCharacters[] = pnombre_completo.toCharArray();
-        char idCharacters[] = strIdentification.toCharArray();
-        
+
+        char[] nameCharacters = pnombre_completo.toCharArray();
+        char[] idCharacters = strIdentification.toCharArray();
+
         ArrayList<Character> passCharacters = new ArrayList<>();
-        passCharacters.add(nameCharacters[0]);
+
+        if (nameCharacters.length > 0) {
+            passCharacters.add(nameCharacters[0]);
+        }
         
-        
-        for (int i = idCharacters.length - 3; i < idCharacters.length; i++) {
+        int startIdx = Math.max(0, idCharacters.length - 3);
+        for (int i = startIdx; i < idCharacters.length; i++) {
             passCharacters.add(idCharacters[i]);
         }
-        for (int i = 1; i <= 4; i++) {
+
+        for (int i = 1; i <= 4 && i < nameCharacters.length; i++) {
             passCharacters.add(nameCharacters[i]);
         }
+
         for (char c : passCharacters) {
             createdPass += c;
         }
