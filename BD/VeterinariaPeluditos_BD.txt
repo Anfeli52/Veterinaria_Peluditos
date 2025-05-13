@@ -1,0 +1,118 @@
+CREATE DATABASE veterinaria_corp;
+USE veterinaria_corp;
+
+
+CREATE TABLE propietarios (
+	numero_documento BIGINT PRIMARY KEY NOT NULL,
+	tipo_documento CHAR(2) NOT NULL,  -- CC: Cedula Ciudadanía, CE: Cedula Extranjería, TI: Tarjeta de identidad, RC: Registro civil
+	nombre_completo VARCHAR(30) NOT NULL,
+	direccion_residencia TEXT NOT NULL, 
+	correo_electronico VARCHAR(60) NOT NULL,
+	telefono VARCHAR(15) NOT NULL,
+	fecha_inicio_cuidado DATE NOT NULL
+);
+
+CREATE TABLE pacientes (
+	numero_id INT PRIMARY KEY NOT NULL,
+	nombre VARCHAR(30) NOT NULL,
+	sexo CHAR(1) NOT NULL, -- F: femenino | M: masculino
+	especie VARCHAR(10) NOT NULL,	
+	peso FLOAT NOT NULL,
+	color TEXT NOT NULL,
+	caracteristicas_particulares VARCHAR(18) NOT NULL,
+	procedencia VARCHAR(30) NOT NULL,
+	fin_zootecnico TEXT NOT NULL,
+	esterilizado BOOLEAN NOT NULL,
+	enfermedades_base TEXT NOT NULL,
+	numero_documento_propietario BIGINT NOT NULL, 	
+	FOREIGN KEY(numero_documento_propietario) REFERENCES propietarios(numero_documento) 
+);
+
+CREATE TABLE antecedentes(
+	numero_id_paciente INT NOT NULL, 
+	FOREIGN KEY(numero_id_paciente) references pacientes(numero_id)
+);
+
+CREATE TABLE sistemas_problematicas(
+	id_problematica INT AUTO_INCREMENT PRIMARY KEY NOT NULL, 
+	tipo VARCHAR(3) NOT NULL, -- SR (sistema respiratorio), ST (sistema tegumentario), SME (sistema musculo esqueletico), SC (sistema cardiovascular), SD (sistema digestivo), SGU (sistema genitourinario), SN (sistema nervioso)
+	descripcion TEXT NOT NULL
+);
+
+ALTER TABLE  sistemas_problematicas ADD(
+	num_id_paciente INT NOT NULL, 
+	FOREIGN KEY(num_id_paciente) REFERENCES antecedentes(numero_id_paciente)
+);
+
+CREATE TABLE consultas ( 
+	id INT auto_increment PRIMARY KEY NOT NULL,
+	motivo VARCHAR(30) NOT NULL, 
+	observaciones TEXT NOT NULL, 
+	diagnostico TEXT NOT NULL,  
+	tratamiento TEXT NOT NULL,  
+	prescripcion TEXT NOT NULL,  
+	fecha DATETIME NOT NULL 
+);
+
+
+CREATE TABLE anamnesis (
+	id_consulta INT PRIMARY KEY NOT NULL,  
+	FOREIGN KEY(id_consulta) references consultas(id), 
+	dieta TEXT NOT NULL, 
+	comportamiento TEXT NOT NULL,  
+	miedos TEXT NOT NULL 
+);
+
+CREATE TABLE exploraciones_fisicas (
+	id_consulta INT PRIMARY KEY NOT NULL, 
+	FOREIGN KEY(id_consulta) references consultas(id),
+	condicion_corporal TEXT NOT NULL,
+	temperatura float NOT NULL,
+	frecuencia_cardiaca float NOT NULL,
+	comportamiento TEXT NOT NULL
+);
+
+CREATE TABLE profesionales (
+	numero_documento BIGINT PRIMARY KEY NOT NULL,
+	tipo_documento CHAR(2) NOT NULL,  -- CC:Cedula Ciudadanía, CE: Cedula de Extranjería, TI:Tarjeta de identidad, RC: Registro civil
+	nombre_completo VARCHAR(30) NOT NULL,
+	direccion_residencia TEXT NOT NULL, 
+	correo_electronico VARCHAR(60) NOT NULL,
+	telefono VARCHAR(15) NOT NULL,
+    fecha_inicio_cuidado DATE,
+    contrasena VARCHAR(50)
+);
+
+CREATE TABLE historias_clinicas (
+	id_consulta INT PRIMARY KEY NOT NULL,
+	FOREIGN KEY(id_consulta) references consultas(id),
+	fecha_elaboracion DATETIME NOT NULL
+);
+
+CREATE TABLE vacunas (
+	numero_id_paciente INT NOT NULL,
+	FOREIGN KEY(numero_id_paciente) references pacientes(numero_id),
+	numero_serie VARCHAR(30) PRIMARY KEY NOT NULL, -- es el identificador de cada vacuna individualmente
+	cantidad INT NOT NULL,
+	dosis TEXT NOT NULL,
+	tipo VARCHAR(30) NOT NULL,
+	marca VARCHAR(30) NOT NULL,
+	fecha_aplicacion DATETIME NOT NULL
+);
+
+CREATE TABLE examenes (
+	id VARCHAR(20) PRIMARY KEY NOT NULL, 
+	tipo VARCHAR(30) NOT NULL -- radiografía, ecografía, hemograma, etc.
+);
+
+
+CREATE TABLE consultas_examenes (
+	id_examen VARCHAR(20)  NOT NULL, 
+	id_consulta INT NOT NULL, 
+	PRIMARY KEY(id_examen,id_consulta),
+	FOREIGN KEY(id_examen) references examenes(id), 
+	FOREIGN KEY(id_consulta) references consultas(id)
+);
+
+#Correo y Contraseña del Admin
+INSERT INTO profesionales VALUES(111, "CC", "Andrés Medina", "Calle 123", "andres@gmail.com", 1111, "2025-05-11", "papita123");
