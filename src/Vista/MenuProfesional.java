@@ -22,14 +22,18 @@ public class MenuProfesional extends javax.swing.JFrame {
     private static GestionarPropietario gestionarPropietario;
     private int xMouse, yMouse;
     private final BaseDatos bd;
+    private Login login;
     
     public MenuProfesional() {
         initComponents();
         rsscalelabel.RSScaleLabel.setScaleLabel(lblAvatar, "src/Vista/Imagenes/AvatarVeterinario.png");
         bd = new BaseDatos();
         tblPanel.setVisible(false);
-        btnAgregarProfesional.setVisible(false);
+        btnAgregarEntidad.setVisible(false);
         btnActualizar.setVisible(false);
+        btnBuscar.setVisible(false);
+        txtBuscar.setVisible(false);
+        tblEntidades.setRowHeight(35);
     }
 
     /**
@@ -57,9 +61,12 @@ public class MenuProfesional extends javax.swing.JFrame {
         lblBienvenido = new java.awt.Label();
         tblPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblProfesionales = new javax.swing.JTable();
-        btnAgregarProfesional = new javax.swing.JButton();
+        tblEntidades = new javax.swing.JTable();
+        btnAgregarEntidad = new javax.swing.JButton();
         btnActualizar = new javax.swing.JButton();
+        txtBuscar = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JPanel();
+        lblBuscar = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -259,14 +266,17 @@ public class MenuProfesional extends javax.swing.JFrame {
         jPanel1.add(exitPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 40));
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblBienvenido.setAlignment(java.awt.Label.CENTER);
         lblBienvenido.setFont(new java.awt.Font("Roboto Black", 1, 28)); // NOI18N
         lblBienvenido.setText("BIENVENIDO PROFESIONAL");
+        jPanel3.add(lblBienvenido, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 25, -1, 45));
 
         tblPanel.setBackground(new java.awt.Color(204, 204, 204));
+        tblPanel.setMinimumSize(new java.awt.Dimension(0, 350));
 
-        tblProfesionales.setModel(new javax.swing.table.DefaultTableModel(
+        tblEntidades.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -277,7 +287,7 @@ public class MenuProfesional extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tblProfesionales);
+        jScrollPane1.setViewportView(tblEntidades);
 
         javax.swing.GroupLayout tblPanelLayout = new javax.swing.GroupLayout(tblPanel);
         tblPanel.setLayout(tblPanelLayout);
@@ -287,16 +297,17 @@ public class MenuProfesional extends javax.swing.JFrame {
         );
         tblPanelLayout.setVerticalGroup(
             tblPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(tblPanelLayout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
         );
 
-        btnAgregarProfesional.addMouseListener(new java.awt.event.MouseAdapter() {
+        jPanel3.add(tblPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 142, -1, 350));
+
+        btnAgregarEntidad.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAgregarProfesionalMouseClicked(evt);
+                btnAgregarEntidadMouseClicked(evt);
             }
         });
+        jPanel3.add(btnAgregarEntidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 504, 170, 39));
 
         btnActualizar.setText("Actualizar");
         btnActualizar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -304,35 +315,45 @@ public class MenuProfesional extends javax.swing.JFrame {
                 btnActualizarMouseClicked(evt);
             }
         });
+        jPanel3.add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(202, 504, 170, 39));
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tblPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblBienvenido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(btnAgregarProfesional, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(24, Short.MAX_VALUE))
+        txtBuscar.setFont(new java.awt.Font("Roboto Black", 1, 12)); // NOI18N
+        txtBuscar.setText("Buscar Propietario");
+        txtBuscar.setMinimumSize(new java.awt.Dimension(68, 30));
+        txtBuscar.setPreferredSize(new java.awt.Dimension(75, 30));
+        jPanel3.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 630, 40));
+
+        btnBuscar.setBackground(new java.awt.Color(110, 77, 0));
+
+        lblBuscar.setFont(new java.awt.Font("Roboto Black", 1, 12)); // NOI18N
+        lblBuscar.setForeground(new java.awt.Color(255, 255, 255));
+        lblBuscar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblBuscar.setText("Buscar");
+        lblBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblBuscarMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblBuscarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblBuscarMouseExited(evt);
+            }
+        });
+
+        javax.swing.GroupLayout btnBuscarLayout = new javax.swing.GroupLayout(btnBuscar);
+        btnBuscar.setLayout(btnBuscarLayout);
+        btnBuscarLayout.setHorizontalGroup(
+            btnBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lblBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(lblBienvenido, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42)
-                .addComponent(tblPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAgregarProfesional, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(17, Short.MAX_VALUE))
+        btnBuscarLayout.setVerticalGroup(
+            btnBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lblBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
         );
+
+        jPanel3.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 100, 110, 40));
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 40, 810, 560));
 
@@ -351,12 +372,14 @@ public class MenuProfesional extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblGestionarProfesionalesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGestionarProfesionalesMouseClicked
-        bd.mostrarProfesionales(tblProfesionales);
+        bd.mostrarProfesionales(tblEntidades);
         
-        btnAgregarProfesional.setText("Agregar Profesional");
+        btnBuscar.setVisible(true);
+        txtBuscar.setVisible(true);
+        btnAgregarEntidad.setText("Agregar Profesional");
         
         tblPanel.setVisible(true);
-        btnAgregarProfesional.setVisible(true);
+        btnAgregarEntidad.setVisible(true);
         btnActualizar.setVisible(true);
         
         //JOptionPane.showMessageDialog(this, "Me presionaste");
@@ -412,12 +435,14 @@ public class MenuProfesional extends javax.swing.JFrame {
     }//GEN-LAST:event_exitPanelMousePressed
 
     private void lblGestionarPropietariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGestionarPropietariosMouseClicked
-        bd.mostrarPropietarios(tblProfesionales);
+        bd.mostrarPropietarios(tblEntidades);
         
-        btnAgregarProfesional.setText("Agregar Propietario");
+        btnBuscar.setVisible(true);
+        txtBuscar.setVisible(true);
+        btnAgregarEntidad.setText("Agregar Propietario");
         
         tblPanel.setVisible(true);
-        btnAgregarProfesional.setVisible(true);
+        btnAgregarEntidad.setVisible(true);
         btnActualizar.setVisible(true);
         
     }//GEN-LAST:event_lblGestionarPropietariosMouseClicked
@@ -432,11 +457,11 @@ public class MenuProfesional extends javax.swing.JFrame {
         lblGestionarPropietarios.setForeground(Color.WHITE);
     }//GEN-LAST:event_lblGestionarPropietariosMouseExited
 
-    private void btnAgregarProfesionalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarProfesionalMouseClicked
+    private void btnAgregarEntidadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarEntidadMouseClicked
         
         //Configurar el botón para que identifique cuándo se muestran los propietarios y los profesionales.
         
-        if(btnAgregarProfesional.getText().equals("Agregar Profesional")){
+        if(btnAgregarEntidad.getText().equals("Agregar Profesional")){
             gestionarProfesional = new GestionarProfesional();
             gestionarProfesional.setVisible(true);
         } else{
@@ -445,25 +470,52 @@ public class MenuProfesional extends javax.swing.JFrame {
         }
         
         
-    }//GEN-LAST:event_btnAgregarProfesionalMouseClicked
+    }//GEN-LAST:event_btnAgregarEntidadMouseClicked
 
     private void lblCerrarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCerrarSesionMouseClicked
         bd.cerrarConexion();
-        System.exit(0);
+        this.setVisible(false);
+        login = new Login();
+        login.setVisible(true);
+        
     }//GEN-LAST:event_lblCerrarSesionMouseClicked
 
     private void btnActualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarMouseClicked
-        if(btnAgregarProfesional.getText().equals("Agregar Profesional")){
-            bd.mostrarProfesionales(tblProfesionales);
+        if(btnAgregarEntidad.getText().equals("Agregar Profesional")){
+            bd.mostrarProfesionales(tblEntidades);
         } else{
-            bd.mostrarPropietarios(tblProfesionales);
+            bd.mostrarPropietarios(tblEntidades);
         }
     }//GEN-LAST:event_btnActualizarMouseClicked
+
+    private void lblBuscarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBuscarMouseEntered
+        btnBuscar.setBackground(new Color(128, 77, 0));
+        lblBuscar.setForeground(Color.WHITE);
+    }//GEN-LAST:event_lblBuscarMouseEntered
+
+    private void lblBuscarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBuscarMouseExited
+        btnBuscar.setBackground(new Color(110, 77, 0));
+        lblBuscar.setForeground(Color.WHITE);
+    }//GEN-LAST:event_lblBuscarMouseExited
+
+    private void lblBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBuscarMouseClicked
+        String nameTable = "";
+        
+        if(btnAgregarEntidad.getText().equals("Agregar Propietario")){
+            nameTable = "propietarios";
+            bd.buscarEntidad(tblEntidades, txtBuscar.getText(), nameTable);
+        }else{
+            nameTable = "profesionales";
+            bd.buscarEntidad(tblEntidades, txtBuscar.getText(), nameTable);
+        }
+        
+    }//GEN-LAST:event_lblBuscarMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
-    private javax.swing.JButton btnAgregarProfesional;
+    private javax.swing.JButton btnAgregarEntidad;
+    private javax.swing.JPanel btnBuscar;
     private javax.swing.JPanel btnConfiguraciones;
     private javax.swing.JPanel btnGestionarProfesionales;
     private javax.swing.JPanel btnGestionarPropietarios;
@@ -475,11 +527,13 @@ public class MenuProfesional extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAvatar;
     private java.awt.Label lblBienvenido;
+    private javax.swing.JLabel lblBuscar;
     private javax.swing.JLabel lblCerrarSesion;
     private javax.swing.JLabel lblExit;
     private javax.swing.JLabel lblGestionarProfesionales;
     private javax.swing.JLabel lblGestionarPropietarios;
+    public javax.swing.JTable tblEntidades;
     private javax.swing.JPanel tblPanel;
-    public javax.swing.JTable tblProfesionales;
+    private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 }

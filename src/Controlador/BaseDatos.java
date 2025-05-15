@@ -6,7 +6,11 @@ package Controlador;
 
 import Modelo.Profesional;
 import Modelo.Propietario;
+import Vista.AgregarPaciente;
 import Vista.MenuProfesional;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,6 +19,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import java.sql.Statement;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -42,7 +52,7 @@ public class BaseDatos {
         nameDB = "veterinaria_corp";
         user = "root";
         pwd = "root";
-        port = 3306;
+        port = 3307;
         
         
         try {
@@ -124,8 +134,17 @@ public class BaseDatos {
         try {
             nameTable = "propietarios";
             //Agregar mediante una SUBCONSULTA, el número de mascotas que tiene cada propietario registrado, ya que si es propietario, quiere decir que tiene al menos una mascota.
-            String sqlString = "SELECT numero_documento, nombre_completo, direccion_residencia, correo_electronico, telefono FROM propietarios";
+            String sqlString = "SELECT numero_documento, nombre_completo, direccion_residencia, correo_electronico, telefono, "
+                    + "(SELECT count(*) FROM pacientes WHERE pacientes.numero_documento_propietario = propietarios.numero_documento) "
+                    + "AS cantidad_mascotas FROM propietarios";
             Statement stm;
+            
+            //
+            //    SELECT numero_documento, nombre_completo, direccion_residencia, correo_electronico, telefono, 
+            //            (SELECT COUNT(*) FROM pacientes WHERE pacientes.numero_documento_propietario = propietarios.numero_documento) 
+            //    AS cantidad_mascotas FROM propietarios;
+            //
+            
             
             DefaultTableModel tableModel = new DefaultTableModel();
             tableModel.addColumn("Número de Documento");
@@ -133,18 +152,30 @@ public class BaseDatos {
             tableModel.addColumn("Dirección de Residencia");
             tableModel.addColumn("Correo Electrónico");
             tableModel.addColumn("Teléfono");
+            tableModel.addColumn("Cantidad de Mascotas");
+            tableModel.addColumn("Agregar Mascota");            
             
-            String[] datos = new String[5];
+            // String[] datos = new String[6];
+            Object[] fila = new Object[7];
             try {
                 stm = dbConnection.createStatement();
                 rs = stm.executeQuery(sqlString);
                 while (rs.next()) {
-                    datos[0] = rs.getString(1);
-                    datos[1] = rs.getString(2);
-                    datos[2] = rs.getString(3);
-                    datos[3] = rs.getString(4);
-                    datos[4] = rs.getString(5);
-                    tableModel.addRow(datos);
+    
+                    JButton btnAgregarMascota = new JButton("Agregar");
+                    btnAgregarMascota.setBackground(Color.WHITE);
+                    btnAgregarMascota.setPreferredSize(new Dimension(160, 280));
+                    btnAgregarMascota.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+                    
+                    fila[0] = rs.getString(1);
+                    fila[1] = rs.getString(2);
+                    fila[2] = rs.getString(3);
+                    fila[3] = rs.getString(4);
+                    fila[4] = rs.getString(5);
+                    fila[5] = rs.getString(6);
+                    fila[6] = btnAgregarMascota;
+                    
+                    tableModel.addRow(fila);
                 }
             } catch (SQLException evt) {
                 System.out.println("Error al encontrar los datos de la tabla "+nameTable);
@@ -157,9 +188,7 @@ public class BaseDatos {
         }
     }
     
-    
-    
-    public boolean insertarProfesional(Profesional profesional) throws SQLException{
+    public boolean insertarProfesional(Profesional profesional) throws SQLException {
         
         String nameTable = "";
         try {
@@ -193,7 +222,7 @@ public class BaseDatos {
         return true;
     }
     
-    public boolean insertarPropietario(Propietario propietario) throws SQLException{
+    public boolean insertarPropietario(Propietario propietario) throws SQLException {
         
         String nameTable = "";
         try {
@@ -226,7 +255,7 @@ public class BaseDatos {
         return true;
     }
     
-    public boolean buscarProfesional(String correo, String password) throws SQLException{
+    public boolean buscarProfesional(String correo, String password) throws SQLException {
         
         String nameTable = "";
         try {
@@ -251,6 +280,48 @@ public class BaseDatos {
         }
         
         return true;
+    }
+    
+    public void buscarEntidad(JTable tablaEntidades, String prompt, String nameTable){
+        
+        try {
+            String sqlString = "SELECT numero_documento, nombre_completo, direccion_residencia, correo_electronico, telefono FROM "+nameTable+" WHERE correo_electronico LIKE ? OR nombre_completo LIKE ?";
+            String searchCondition = "%" +prompt+ "%";
+            
+            DefaultTableModel tableModel = new DefaultTableModel();
+            tableModel.addColumn("Número de Documento");
+            tableModel.addColumn("Nombre Completo");
+            tableModel.addColumn("Dirección de Residencia");
+            tableModel.addColumn("Correo Electrónico");
+            tableModel.addColumn("Teléfono");
+            
+            String[] datos = new String[5];
+            try {
+                pstm = dbConnection.prepareStatement(sqlString);
+                pstm.setString(1, searchCondition);
+                pstm.setString(2, searchCondition);
+                
+                rs = pstm.executeQuery();
+                while (rs.next()) {
+                    datos[0] = rs.getString(1);
+                    datos[1] = rs.getString(2);
+                    datos[2] = rs.getString(3);
+                    datos[3] = rs.getString(4);
+                    datos[4] = rs.getString(5);
+                    tableModel.addRow(datos);
+                }
+            } catch (SQLException evt) {
+                System.out.println("Error al encontrar los datos de la tabla "+nameTable);
+                System.err.println(evt);
+            }
+            
+            tablaEntidades.setModel(tableModel);
+            
+        } catch (Exception evt) {
+            System.out.println("!!Operación de busqueda en la tabla " + nameTable + " fallida.!!");
+            System.err.println(evt);
+        }
+        
     }
     
 }
