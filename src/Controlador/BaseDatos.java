@@ -164,7 +164,6 @@ public class BaseDatos {
     
                     JButton btnAgregarMascota = new JButton("Agregar");
                     btnAgregarMascota.setBackground(Color.WHITE);
-                    btnAgregarMascota.setPreferredSize(new Dimension(160, 280));
                     btnAgregarMascota.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
                     
                     fila[0] = rs.getString(1);

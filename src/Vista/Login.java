@@ -28,9 +28,9 @@ public class Login extends javax.swing.JFrame {
         initComponents();
         rsscalelabel.RSScaleLabel.setScaleLabel(lblLoginIcon, "src/Vista/Imagenes/PerritoLogin.jpg");
         bd = new BaseDatos();
-        /*JOptionPane.showMessageDialog(this, "Correo Predeterminado: andres@gmail.com"
+        JOptionPane.showMessageDialog(this, "Correo Predeterminado: andres@gmail.com"
                 + "\nContraseña Predeterminada: papita123");
-        JOptionPane.showMessageDialog(this, "Verificar el Puerto antes de iniciar el programa, por defecto está en el 3307");*/
+        JOptionPane.showMessageDialog(this, "Verificar el Puerto antes de iniciar el programa, por defecto está en el 3307");
     }
 
     /**
