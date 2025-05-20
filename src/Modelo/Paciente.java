@@ -12,7 +12,7 @@ public class Paciente {
     
     private int numero_id; //PK
     private String nombre;
-    private char sexo;
+    private String sexo;
     private String especie;
     private float peso;
     private String color;
@@ -23,7 +23,7 @@ public class Paciente {
     private String enfermedades_base;
     private final long numero_documento_propietario; //FK
 
-    public Paciente(String nombre, char sexo, String especie, float peso, String color, String caracteristicas_particulares, String procedencia, String fin_zootecnico, boolean esterilizado, String enfermedades_base, long numero_documento_propietario) {
+    public Paciente(String nombre, String sexo, String especie, float peso, String color, String caracteristicas_particulares, String procedencia, String fin_zootecnico, boolean esterilizado, String enfermedades_base, long numero_documento_propietario) {
         this.nombre = nombre;
         this.sexo = sexo;
         this.especie = especie;
@@ -49,11 +49,11 @@ public class Paciente {
         this.nombre = nombre;
     }
 
-    public char getSexo() {
+    public String getSexo() {
         return sexo;
     }
 
-    public void setSexo(char sexo) {
+    public void setSexo(String sexo) {
         this.sexo = sexo;
     }
 

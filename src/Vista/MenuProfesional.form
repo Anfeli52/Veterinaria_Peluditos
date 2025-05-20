@@ -428,7 +428,6 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Roboto Black" size="12" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Buscar Propietario"/>
                 <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[68, 30]"/>
                 </Property>

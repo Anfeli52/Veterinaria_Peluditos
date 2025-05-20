@@ -4,13 +4,10 @@
  */
 package Controlador;
 
+import Modelo.Paciente;
 import Modelo.Profesional;
 import Modelo.Propietario;
-import Vista.AgregarPaciente;
-import Vista.MenuProfesional;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -20,15 +17,9 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import java.sql.Statement;
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-
-
 
 /**
  *
@@ -51,8 +42,8 @@ public class BaseDatos {
     public boolean crearConexion(){
         nameDB = "veterinaria_corp";
         user = "root";
-        pwd = "root";
-        port = 3307;
+        pwd = "";
+        port = 3306;
         
         
         try {
@@ -68,7 +59,7 @@ public class BaseDatos {
         }
         return true;
     }
-    
+
     public void cerrarConexion() {
         try {
             if (dbConnection != null) {
@@ -153,18 +144,23 @@ public class BaseDatos {
             tableModel.addColumn("Correo Electrónico");
             tableModel.addColumn("Teléfono");
             tableModel.addColumn("Cantidad de Mascotas");
-            tableModel.addColumn("Agregar Mascota");            
+            tableModel.addColumn("Agregar Mascota");      
+            tableModel.addColumn("Editar");
             
             // String[] datos = new String[6];
-            Object[] fila = new Object[7];
+          Object[] fila = new Object[8];
             try {
                 stm = dbConnection.createStatement();
                 rs = stm.executeQuery(sqlString);
                 while (rs.next()) {
-    
+                       
                     JButton btnAgregarMascota = new JButton("Agregar");
                     btnAgregarMascota.setBackground(Color.WHITE);
                     btnAgregarMascota.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+                    
+                    JButton btnEditarPropietario = new JButton("Editar");
+                    btnEditarPropietario.setBackground(Color.WHITE);
+                    btnEditarPropietario.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
                     
                     fila[0] = rs.getString(1);
                     fila[1] = rs.getString(2);
@@ -173,6 +169,7 @@ public class BaseDatos {
                     fila[4] = rs.getString(5);
                     fila[5] = rs.getString(6);
                     fila[6] = btnAgregarMascota;
+                    fila[7] = btnEditarPropietario;
                     
                     tableModel.addRow(fila);
                 }
@@ -182,6 +179,14 @@ public class BaseDatos {
             }
             
             tablaPropietarios.setModel(tableModel);
+            
+            //Botón para Añadir Pacientes
+            tablaPropietarios.getColumnModel().getColumn(6).setCellRenderer(new BotonAgregarMascota());
+            tablaPropietarios.getColumnModel().getColumn(6).setCellEditor(new BotonAgregar(tablaPropietarios));
+            
+            //Botón para Editar Propietarios
+            tablaPropietarios.getColumnModel().getColumn(7).setCellRenderer(new BotonAgregarMascota());
+            tablaPropietarios.getColumnModel().getColumn(7).setCellEditor(new BotonEditar(tablaPropietarios));
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -227,8 +232,8 @@ public class BaseDatos {
         try {
             nameTable = "propietarios";
             String sqlString = "INSERT INTO "+nameTable+" (numero_documento, tipo_documento, nombre_completo, direccion_residencia, correo_electronico, telefono, fecha_inicio_cuidado) VALUES(?, ?, ?, ?, ?, ?, ?)";
-            pstm = dbConnection.prepareCall(sqlString);
-            pstm.setInt(1, propietario.getPnumero_documento());
+            pstm = dbConnection.prepareStatement(sqlString);
+            pstm.setLong(1, propietario.getPnumero_documento());
             pstm.setString(2, String.valueOf(propietario.getPtipo_documento()));
             pstm.setString(3, propietario.getPnombre_completo());
             pstm.setString(4, propietario.getPdireccion_residencia());
@@ -242,6 +247,44 @@ public class BaseDatos {
             System.err.println(evt);
             return false;
         } finally {
+            if (pstm != null) {
+                try {
+                    pstm.close();
+                } catch (SQLException e) {
+                    System.err.println("Error al cerrar PreparedStatement: " + e);
+                }
+            }
+        }
+        
+        return true;
+    }
+    
+    public boolean insertarPaciente(Paciente paciente) throws SQLException{
+        
+        String nameTable = "";
+        try {
+            nameTable = "pacientes";
+            String sqlString = "INSERT INTO "+nameTable+" (numero_id, nombre, sexo, especie, peso, color, caracteristicas_particulares, procedencia, fin_zootecnico, esterilizado, enfermedades_base, numero_documento_propietario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            pstm = dbConnection.prepareStatement(sqlString);
+            pstm.setLong(1, paciente.getNumero_id());
+            pstm.setString(2, paciente.getNombre());
+            pstm.setString(3, paciente.getSexo());
+            pstm.setString(4, paciente.getEspecie());
+            pstm.setFloat(5, paciente.getPeso());
+            pstm.setString(6, paciente.getColor());
+            pstm.setString(7, paciente.getCaracteristicas_particulares());
+            pstm.setString(8, paciente.getProcedencia());
+            pstm.setString(9, paciente.getFin_zootecnico());
+            pstm.setBoolean(10, paciente.isEsterilizado());
+            pstm.setString(11, paciente.getEnfermedades_base());
+            pstm.setLong(12, paciente.getNumero_documento_propietario());
+            pstm.executeUpdate();
+            
+        } catch (SQLException evt) {
+            System.out.println("!!Operación de inserción en la tabla " + nameTable + " fallida.!!");
+            System.err.println(evt);
+            return false;
+        }   finally {
             if (pstm != null) {
                 try {
                     pstm.close();
@@ -281,6 +324,8 @@ public class BaseDatos {
         return true;
     }
     
+    
+    //CORREGIR O ELIMINAR ESTE MÉTODO DEL BUSCADOR
     public void buscarEntidad(JTable tablaEntidades, String prompt, String nameTable){
         
         try {
@@ -293,6 +338,8 @@ public class BaseDatos {
             tableModel.addColumn("Dirección de Residencia");
             tableModel.addColumn("Correo Electrónico");
             tableModel.addColumn("Teléfono");
+            tableModel.addColumn("Agregar Mascota");      
+            tableModel.addColumn("Editar");
             
             String[] datos = new String[5];
             try {
@@ -322,5 +369,8 @@ public class BaseDatos {
         }
         
     }
+    
+    
+    
     
 }

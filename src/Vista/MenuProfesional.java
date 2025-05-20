@@ -318,7 +318,6 @@ public class MenuProfesional extends javax.swing.JFrame {
         jPanel3.add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(202, 504, 170, 39));
 
         txtBuscar.setFont(new java.awt.Font("Roboto Black", 1, 12)); // NOI18N
-        txtBuscar.setText("Buscar Propietario");
         txtBuscar.setMinimumSize(new java.awt.Dimension(68, 30));
         txtBuscar.setPreferredSize(new java.awt.Dimension(75, 30));
         jPanel3.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 630, 40));

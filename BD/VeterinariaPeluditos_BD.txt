@@ -1,3 +1,5 @@
+DROP DATABASE IF EXISTS veterinaria_corp;
+
 CREATE DATABASE veterinaria_corp;
 USE veterinaria_corp;
 
@@ -19,7 +21,7 @@ CREATE TABLE pacientes (
 	especie VARCHAR(10) NOT NULL,	
 	peso FLOAT NOT NULL,
 	color TEXT NOT NULL,
-	caracteristicas_particulares VARCHAR(18) NOT NULL,
+	caracteristicas_particulares TEXT NOT NULL,
 	procedencia VARCHAR(30) NOT NULL,
 	fin_zootecnico TEXT NOT NULL,
 	esterilizado BOOLEAN NOT NULL,
@@ -114,5 +116,11 @@ CREATE TABLE consultas_examenes (
 	FOREIGN KEY(id_consulta) references consultas(id)
 );
 
+#DROP DATABASE IF EXISTS veterinaria_corp;
+
+#SELECT * FROM pacientes;
+
+#DELETE FROM pacientes WHERE numero_id = 1;
+
 #Correo y Contraseña del Admin
-INSERT INTO profesionales VALUES(111, "CC", "Andrés Medina", "Calle 123", "andres@gmail.com", 1111, "2025-05-11", "papita123");
+#INSERT INTO profesionales VALUES(111, "CC", "Andrés Medina", "Calle 123", "andres@gmail.com", 1111, "2025-05-11", "papita123");

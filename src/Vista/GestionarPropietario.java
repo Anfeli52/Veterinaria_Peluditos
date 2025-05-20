@@ -22,7 +22,7 @@ public class GestionarPropietario extends javax.swing.JFrame {
 
     Propietario propietario;
     
-    private int identificacion;
+    private long identificacion;
     private String tipo_documento;
     private String nombre_completo;
     private String direccion;
@@ -30,7 +30,8 @@ public class GestionarPropietario extends javax.swing.JFrame {
     private String telefono;
     private Date date;
     private SimpleDateFormat dateFormat;
-    private BaseDatos bd;
+    
+    private final BaseDatos bd;
     
     private int xMouse, yMouse;
     
@@ -248,8 +249,8 @@ public class GestionarPropietario extends javax.swing.JFrame {
 
     private void btnAgregarPropietarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarPropietarioActionPerformed
         try {
-            if(!(ctNumeroIdentificacion.getText().isEmpty()|| ctNombreCompleto.getText().isEmpty() || atDireccion.getText().isEmpty() || ctCorreo.getText().isEmpty() || ctTelefono.getText().isEmpty())){
-                identificacion = Integer.parseInt(ctNumeroIdentificacion.getText());
+            if(!(ctNumeroIdentificacion.getText().isEmpty() || ctNombreCompleto.getText().isEmpty() || atDireccion.getText().isEmpty() || ctCorreo.getText().isEmpty() || ctTelefono.getText().isEmpty())){
+                identificacion = Long.parseLong(ctNumeroIdentificacion.getText());
                 tipo_documento = (String) cbTipo.getSelectedItem();
                 nombre_completo = ctNombreCompleto.getText();
                 direccion = atDireccion.getText();
@@ -284,6 +285,8 @@ public class GestionarPropietario extends javax.swing.JFrame {
                 } catch (SQLException ex) {
                     Logger.getLogger(GestionarPropietario.class.getName()).log(Level.SEVERE, null, ex);
                 }
+            } else{
+                JOptionPane.showMessageDialog(this, "Por favor ingrese todos los datos");
             }
             
         } catch (NumberFormatException e) {

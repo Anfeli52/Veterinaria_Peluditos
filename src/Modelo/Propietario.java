@@ -12,15 +12,19 @@ import java.sql.Date;
  */
 public class Propietario {
     
-    private int pnumero_documento;
+    private long pnumero_documento;
     private String ptipo_documento;
     private String pnombre_completo;
     private String pdireccion_residencia;
     private String pcorreo_electronico;
     private String ptelefono;
     private Date pdate;
-
-    public Propietario(int pnumero_documento, String ptipo_documento, String pnombre_completo, String pdireccion_residencia, String pcorreo_electronico, String ptelefono, Date pdate) {
+    
+    public Propietario(){
+        
+    }
+    
+    public Propietario(long pnumero_documento, String ptipo_documento, String pnombre_completo, String pdireccion_residencia, String pcorreo_electronico, String ptelefono, Date pdate) {
         this.pnumero_documento = pnumero_documento;
         this.ptipo_documento = ptipo_documento;
         this.pnombre_completo = pnombre_completo;
@@ -30,7 +34,7 @@ public class Propietario {
         this.pdate = pdate;
     }
 
-    public int getPnumero_documento() {
+    public long getPnumero_documento() {
         return pnumero_documento;
     }
 
