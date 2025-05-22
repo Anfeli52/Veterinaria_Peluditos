@@ -13,7 +13,7 @@ import javax.swing.JTable;
  *
  * @author anfel
  */
-public class BotonAgregarMascota implements TableCellRenderer {
+public class Boton implements TableCellRenderer {
     
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value,

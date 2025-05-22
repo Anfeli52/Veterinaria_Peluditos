@@ -124,18 +124,11 @@ public class BaseDatos {
         
         try {
             nameTable = "propietarios";
-            //Agregar mediante una SUBCONSULTA, el número de mascotas que tiene cada propietario registrado, ya que si es propietario, quiere decir que tiene al menos una mascota.
+            
             String sqlString = "SELECT numero_documento, nombre_completo, direccion_residencia, correo_electronico, telefono, "
                     + "(SELECT count(*) FROM pacientes WHERE pacientes.numero_documento_propietario = propietarios.numero_documento) "
                     + "AS cantidad_mascotas FROM propietarios";
             Statement stm;
-            
-            //
-            //    SELECT numero_documento, nombre_completo, direccion_residencia, correo_electronico, telefono, 
-            //            (SELECT COUNT(*) FROM pacientes WHERE pacientes.numero_documento_propietario = propietarios.numero_documento) 
-            //    AS cantidad_mascotas FROM propietarios;
-            //
-            
             
             DefaultTableModel tableModel = new DefaultTableModel();
             tableModel.addColumn("Número de Documento");
@@ -144,11 +137,12 @@ public class BaseDatos {
             tableModel.addColumn("Correo Electrónico");
             tableModel.addColumn("Teléfono");
             tableModel.addColumn("Cantidad de Mascotas");
-            tableModel.addColumn("Agregar Mascota");      
+            tableModel.addColumn("Agregar Mascota");
             tableModel.addColumn("Editar");
+            tableModel.addColumn("Eliminar");
             
             // String[] datos = new String[6];
-          Object[] fila = new Object[8];
+          Object[] fila = new Object[9];
             try {
                 stm = dbConnection.createStatement();
                 rs = stm.executeQuery(sqlString);
@@ -162,6 +156,12 @@ public class BaseDatos {
                     btnEditarPropietario.setBackground(Color.WHITE);
                     btnEditarPropietario.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
                     
+                    JButton btnEliminarPropietario = new JButton("Eliminar");
+                    btnEliminarPropietario.setBackground(Color.WHITE);
+                    btnEliminarPropietario.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+                    
+                    
+                    
                     fila[0] = rs.getString(1);
                     fila[1] = rs.getString(2);
                     fila[2] = rs.getString(3);
@@ -170,6 +170,7 @@ public class BaseDatos {
                     fila[5] = rs.getString(6);
                     fila[6] = btnAgregarMascota;
                     fila[7] = btnEditarPropietario;
+                    fila[8] = btnEliminarPropietario;
                     
                     tableModel.addRow(fila);
                 }
@@ -181,19 +182,91 @@ public class BaseDatos {
             tablaPropietarios.setModel(tableModel);
             
             //Botón para Añadir Pacientes
-            tablaPropietarios.getColumnModel().getColumn(6).setCellRenderer(new BotonAgregarMascota());
-            tablaPropietarios.getColumnModel().getColumn(6).setCellEditor(new BotonAgregar(tablaPropietarios));
+            tablaPropietarios.getColumnModel().getColumn(6).setCellRenderer(new Boton());
+            tablaPropietarios.getColumnModel().getColumn(6).setCellEditor(new BotonAgregar(tablaPropietarios, nameTable));
             
             //Botón para Editar Propietarios
-            tablaPropietarios.getColumnModel().getColumn(7).setCellRenderer(new BotonAgregarMascota());
+            tablaPropietarios.getColumnModel().getColumn(7).setCellRenderer(new Boton());
             tablaPropietarios.getColumnModel().getColumn(7).setCellEditor(new BotonEditar(tablaPropietarios));
+            
+            //Botón para Editar Propietarios
+            tablaPropietarios.getColumnModel().getColumn(8).setCellRenderer(new Boton());
+            tablaPropietarios.getColumnModel().getColumn(8).setCellEditor(new BotonEliminar(tablaPropietarios, nameTable));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+    
+    public void mostrarPacientes(JTable tablaPacientes){
+        String nameTable = "";
+        
+        try {
+            nameTable = "pacientes";
+            //Agregar mediante una SUBCONSULTA, el número de mascotas que tiene cada propietario registrado, ya que si es propietario, quiere decir que tiene al menos una mascota.
+            String sqlString = "SELECT numero_id, nombre, sexo, especie, caracteristicas_particulares, enfermedades_base, numero_documento_propietario, (SELECT count(numero_serie) "
+                    + "FROM vacunas) as cantidad_vacunas FROM "+nameTable;
+            Statement stm;
+            
+            DefaultTableModel tableModel = new DefaultTableModel();
+            tableModel.addColumn("Id del Paciente");
+            tableModel.addColumn("Nombre");
+            tableModel.addColumn("Sexo");
+            tableModel.addColumn("Especie");
+            tableModel.addColumn("Caracterísitcas Particulares");
+            tableModel.addColumn("Enfermedades Base");
+            tableModel.addColumn("Id del Propietario");
+            tableModel.addColumn("Total de Vacunas");
+            tableModel.addColumn("Añadir Vacuna");
+            tableModel.addColumn("Eliminar");
+            
+            // String[] datos = new String[6];
+            Object[] fila = new Object[10];
+            try {
+                stm = dbConnection.createStatement();
+                rs = stm.executeQuery(sqlString);
+                while (rs.next()) {
+                       
+                    JButton btnAgregarMascota = new JButton("Agregar");
+                    btnAgregarMascota.setBackground(Color.WHITE);
+                    btnAgregarMascota.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+                    
+                    JButton btnEliminarMascota = new JButton("Eliminar");
+                    btnEliminarMascota.setBackground(Color.WHITE);
+                    btnEliminarMascota.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+                    
+                    fila[0] = rs.getString(1);
+                    fila[1] = rs.getString(2);
+                    fila[2] = rs.getString(3);
+                    fila[3] = rs.getString(4);
+                    fila[4] = rs.getString(5);
+                    fila[5] = rs.getString(6);
+                    fila[6] = rs.getString(7);
+                    fila[7] = rs.getString(8);
+                    fila[8] = btnAgregarMascota;
+                    fila[9] = btnEliminarMascota;
+                    
+                    tableModel.addRow(fila);
+                }
+            } catch (SQLException evt) {
+                System.out.println("Error al encontrar los datos de la tabla "+nameTable);
+                System.err.println(evt);
+            }
+            
+            tablaPacientes.setModel(tableModel);
+            
+            //Botón para Añadir Pacientes
+            tablaPacientes.getColumnModel().getColumn(8).setCellRenderer(new Boton());
+            tablaPacientes.getColumnModel().getColumn(8).setCellEditor(new BotonAgregar(tablaPacientes, nameTable));
+            
+            //Botón para Editar Propietarios
+            tablaPacientes.getColumnModel().getColumn(9).setCellRenderer(new Boton());
+            tablaPacientes.getColumnModel().getColumn(9).setCellEditor(new BotonEliminar(tablaPacientes, nameTable));
         } catch (Exception e) {
             System.out.println(e);
         }
     }
     
     public boolean insertarProfesional(Profesional profesional) throws SQLException {
-        
         String nameTable = "";
         try {
             nameTable = "profesionales";
@@ -227,7 +300,6 @@ public class BaseDatos {
     }
     
     public boolean insertarPropietario(Propietario propietario) throws SQLException {
-        
         String nameTable = "";
         try {
             nameTable = "propietarios";
@@ -260,7 +332,6 @@ public class BaseDatos {
     }
     
     public boolean insertarPaciente(Paciente paciente) throws SQLException{
-        
         String nameTable = "";
         try {
             nameTable = "pacientes";
@@ -298,7 +369,6 @@ public class BaseDatos {
     }
     
     public boolean buscarProfesional(String correo, String password) throws SQLException {
-        
         String nameTable = "";
         try {
             nameTable = "profesionales";
@@ -327,7 +397,6 @@ public class BaseDatos {
     
     //CORREGIR O ELIMINAR ESTE MÉTODO DEL BUSCADOR
     public void buscarEntidad(JTable tablaEntidades, String prompt, String nameTable){
-        
         try {
             String sqlString = "SELECT numero_documento, nombre_completo, direccion_residencia, correo_electronico, telefono FROM "+nameTable+" WHERE correo_electronico LIKE ? OR nombre_completo LIKE ?";
             String searchCondition = "%" +prompt+ "%";

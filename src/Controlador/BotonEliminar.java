@@ -4,8 +4,8 @@
  */
 package Controlador;
 
-import Vista.AgregarPaciente;
-import Vista.AgregarVacunas;
+import Vista.EditarPropietario;
+import Vista.EliminarEntidad;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,30 +18,24 @@ import javax.swing.table.TableCellEditor;
  *
  * @author anfel
  */
-public class BotonAgregar extends AbstractCellEditor implements TableCellEditor {
-
+public class BotonEliminar extends AbstractCellEditor implements TableCellEditor{
+    
     private JButton button;
-    private AgregarPaciente agregarPaciente;
-    private AgregarVacunas agregarVacunas;
+    private EliminarEntidad eliminarPropietario;
     
     
-    public BotonAgregar(JTable table, String nameTable) {
-        button = new JButton("Agregar");
+    public BotonEliminar(JTable table, String nameTable) {
+        button = new JButton("Eliminar");
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int fila = table.getSelectedRow();
                 String valor = (String) table.getValueAt(fila, 0);
-                long idEntidad = Long.parseLong(valor);
+                long idEntidadEliminada = Long.parseLong(valor);
                 
-                if(nameTable.equals("pacientes")){
-                    agregarVacunas = new AgregarVacunas(idEntidad);
-                    agregarVacunas.setVisible(true);
-                } else{
-                    agregarPaciente = new AgregarPaciente(idEntidad);
-                    agregarPaciente.setVisible(true);
-                }
-
+                eliminarPropietario = new EliminarEntidad(idEntidadEliminada, nameTable);
+                eliminarPropietario.setVisible(true);
+                
             }
         });
     }
