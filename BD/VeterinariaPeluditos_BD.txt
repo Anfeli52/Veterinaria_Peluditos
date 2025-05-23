@@ -15,7 +15,7 @@ CREATE TABLE propietarios (
 );
 
 CREATE TABLE pacientes (
-	numero_id INT PRIMARY KEY NOT NULL,
+	numero_id INT PRIMARY KEY NOT NULL auto_increment,
 	nombre VARCHAR(30) NOT NULL,
 	sexo CHAR(1) NOT NULL, -- F: femenino | M: masculino
 	especie VARCHAR(10) NOT NULL,	

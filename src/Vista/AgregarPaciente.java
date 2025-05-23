@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
  */
 public class AgregarPaciente extends javax.swing.JFrame {
     
+    private int numero_id;
     private String nombre;
     private float peso;
     private String especie;
@@ -336,6 +337,7 @@ public class AgregarPaciente extends javax.swing.JFrame {
                             txtFinZootecnico.setText("");
                             txtCarPar.setText("");
                             txtEnferBase.setText("");
+                            setVisible(false);
                         } else{
                             JOptionPane.showMessageDialog(this, "!!!Inserción fallida!!!");
                         }

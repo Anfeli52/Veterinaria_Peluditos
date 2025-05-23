@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
  */
 public class GestionarPropietario extends javax.swing.JFrame {
 
-    Propietario propietario;
+    private Propietario propietario;
     
     private long identificacion;
     private String tipo_documento;
@@ -205,6 +205,9 @@ public class GestionarPropietario extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnAgregarPropietario, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 620, 280, 70));
+
+        lblTitulo.setForeground(new java.awt.Color(255, 204, 51));
+        lblTitulo.setText("IMAGEN");
         jPanel1.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 270, 100));
         jPanel1.add(lblFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 720, 720));
 

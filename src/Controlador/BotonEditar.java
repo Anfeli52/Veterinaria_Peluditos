@@ -9,6 +9,9 @@ import Vista.EditarPropietario;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.AbstractCellEditor;
 import javax.swing.JButton;
 import javax.swing.JTable;
@@ -33,7 +36,11 @@ public class BotonEditar extends AbstractCellEditor implements TableCellEditor{
                 String valor = (String) table.getValueAt(fila, 0);
                 long idPropietario = Long.parseLong(valor);
 
-                editarPropietario = new EditarPropietario(idPropietario);
+                try {
+                    editarPropietario = new EditarPropietario(idPropietario);
+                } catch (SQLException ex) {
+                    Logger.getLogger(BotonEditar.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 editarPropietario.setVisible(true);
             }
         });

@@ -24,6 +24,14 @@ public class Propietario {
         
     }
     
+    public Propietario(long unumero_documento, String unombre_completo, String udireccion_residencia, String ucorreo_electronico, String utelefono){
+        this.pnumero_documento = unumero_documento;
+        this.pnombre_completo = unombre_completo;
+        this.pdireccion_residencia = udireccion_residencia;
+        this.pcorreo_electronico = ucorreo_electronico;
+        this.ptelefono = utelefono;
+    }
+    
     public Propietario(long pnumero_documento, String ptipo_documento, String pnombre_completo, String pdireccion_residencia, String pcorreo_electronico, String ptelefono, Date pdate) {
         this.pnumero_documento = pnumero_documento;
         this.ptipo_documento = ptipo_documento;
@@ -81,6 +89,5 @@ public class Propietario {
     public Date getPdate() {
         return pdate;
     }    
-    
     
 }

@@ -15,13 +15,13 @@ import javax.swing.JOptionPane;
  */
 public class Profesional {
     
-    private long pnumero_documento;
+    private final long pnumero_documento;
     private String ptipo_documento;
     private String pnombre_completo;
     private String pdireccion_residencia;
     private String pcorreo_electronico;
     private String ptelefono;
-    private Date pdate;
+    private final Date pdate;
 
     public Profesional(long pnumero_documento, String ptipo_documento, String pnombre_completo, String pdireccion_residencia, String pcorreo_electronico, String ptelefono, Date pdate) {
         this.pnumero_documento = pnumero_documento;

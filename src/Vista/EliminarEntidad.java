@@ -4,7 +4,11 @@
  */
 package Vista;
 
+import Controlador.BaseDatos;
 import java.awt.Color;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,9 +21,10 @@ public class EliminarEntidad extends javax.swing.JFrame {
      * Creates new form EliminarEntidad
      */
     
-    private long idEntidadEliminada;
-    private String nameTable;
+    private final long idEntidadEliminada;
+    private final String nameTable;
     private int xMouse, yMouse;
+    private BaseDatos bd;
     
     public EliminarEntidad(long idEntidadEliminada, String nameTable) {
         this.idEntidadEliminada = idEntidadEliminada;
@@ -168,6 +173,11 @@ public class EliminarEntidad extends javax.swing.JFrame {
         lblSi.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblSi.setText("SI");
         lblSi.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblSi.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblSiMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout btnSiLayout = new javax.swing.GroupLayout(btnSi);
         btnSi.setLayout(btnSiLayout);
@@ -232,8 +242,24 @@ public class EliminarEntidad extends javax.swing.JFrame {
     }//GEN-LAST:event_lblNoMouseEntered
 
     private void lblNoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNoMouseExited
-        // TODO add your handling code here:
+        setVisible(false);
     }//GEN-LAST:event_lblNoMouseExited
+
+    private void lblSiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSiMouseClicked
+        bd = new BaseDatos();
+        try {
+            boolean eliminado = bd.eliminarEntidad(idEntidadEliminada, nameTable);
+            if (eliminado) {
+                JOptionPane.showMessageDialog(null, "Entidad eliminada con éxito.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró la entidad a eliminar.");
+            }
+            setVisible(false);
+        } catch (SQLException ex) {
+            Logger.getLogger(EliminarEntidad.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ocurrió un error al intentar eliminar la entidad.");
+        }
+    }//GEN-LAST:event_lblSiMouseClicked
 
     /**
      * @param args the command line arguments

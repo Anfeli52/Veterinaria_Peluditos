@@ -4,7 +4,15 @@
  */
 package Vista;
 
+import Controlador.BaseDatos;
+import Modelo.Vacuna;
 import java.awt.Color;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.sql.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,11 +24,25 @@ public class AgregarVacunas extends javax.swing.JFrame {
      * Creates new form AgregarVacunas
      */
     
-    private long idPaciente;
+    private final long idPaciente;
+    private String numeroSerie;
+    private int cantidad;
+    private String dosis;
+    private String tipo;
+    private String marca;
+    private Date date;
+    private SimpleDateFormat dateFormat;
+    
+    private final BaseDatos bd;
+    
+    private Vacuna vacuna;
     private int xMouse, yMouse;
     
     public AgregarVacunas(long idPaciente) {
         initComponents();
+        bd = new BaseDatos();
+        this.idPaciente = idPaciente; 
+        rsscalelabel.RSScaleLabel.setScaleLabel(lblTituloVacunas, "src/Vista/Imagenes/TituloVacunas.png");
     }
 
     /**
@@ -36,12 +58,25 @@ public class AgregarVacunas extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         exitBtn = new javax.swing.JPanel();
         lblExit = new javax.swing.JLabel();
+        btnAgregarVacuna = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        ctCantidad = new javax.swing.JTextField();
+        ctNumeroSerie = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        ctTipo = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        ctMarca = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        atDosis = new javax.swing.JTextArea();
+        jLabel2 = new javax.swing.JLabel();
+        lblTituloVacunas = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(255, 251, 245));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
@@ -96,7 +131,7 @@ public class AgregarVacunas extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(exitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 760, Short.MAX_VALUE))
+                .addGap(0, 480, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -105,17 +140,70 @@ public class AgregarVacunas extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 40));
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 520, 40));
+
+        btnAgregarVacuna.setBackground(new java.awt.Color(128, 77, 0));
+        btnAgregarVacuna.setFont(new java.awt.Font("Gill Sans Ultra Bold Condensed", 0, 18)); // NOI18N
+        btnAgregarVacuna.setForeground(new java.awt.Color(255, 255, 255));
+        btnAgregarVacuna.setText("Agregar Vacuna");
+        btnAgregarVacuna.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAgregarVacuna.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarVacunaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnAgregarVacuna, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 480, 460, 70));
+
+        jLabel4.setFont(new java.awt.Font("Gill Sans Ultra Bold Condensed", 0, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(128, 77, 0));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("NUMERO DE SERIE");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 230, 30));
+
+        jLabel3.setFont(new java.awt.Font("Gill Sans Ultra Bold Condensed", 0, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(128, 77, 0));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("CANTIDAD");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 170, 220, 30));
+        jPanel1.add(ctCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 200, 230, 40));
+        jPanel1.add(ctNumeroSerie, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 230, 40));
+
+        jLabel5.setFont(new java.awt.Font("Gill Sans Ultra Bold Condensed", 0, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(128, 77, 0));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("MARCA");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 230, 30));
+        jPanel1.add(ctTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 280, 230, 40));
+
+        jLabel6.setFont(new java.awt.Font("Gill Sans Ultra Bold Condensed", 0, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(128, 77, 0));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("TIPO");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 250, 230, 30));
+        jPanel1.add(ctMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 230, 40));
+
+        atDosis.setColumns(20);
+        atDosis.setRows(5);
+        jScrollPane2.setViewportView(atDosis);
+
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, 460, 100));
+
+        jLabel2.setFont(new java.awt.Font("Gill Sans Ultra Bold Condensed", 0, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(128, 77, 0));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("DOSIS");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 460, 30));
+        jPanel1.add(lblTituloVacunas, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 50, 210, 100));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE)
         );
 
         pack();
@@ -146,15 +234,76 @@ public class AgregarVacunas extends javax.swing.JFrame {
         yMouse = evt.getY();
     }//GEN-LAST:event_jPanel4MousePressed
 
+    private void btnAgregarVacunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarVacunaActionPerformed
+        try {
+            if(!(ctTipo.getText().isEmpty() || ctNumeroSerie.getText().isEmpty() || atDosis.getText().isEmpty() || ctMarca.getText().isEmpty() || ctCantidad.getText().isEmpty())){
+                tipo = ctTipo.getText();
+                numeroSerie = ctNumeroSerie.getText();
+                dosis = atDosis.getText();
+                marca = ctMarca.getText();
+                cantidad = Integer.parseInt(ctCantidad.getText());
+                date = new Date(System.currentTimeMillis());
+                dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+
+                try {
+                    vacuna = new Vacuna(idPaciente, numeroSerie, cantidad, dosis, tipo, marca, date);
+                    
+                    boolean conexion;
+                    boolean insert;
+
+                    conexion = bd.crearConexion();
+                    if(conexion){
+                        insert = bd.insertarVacuna(vacuna);
+                        if(insert){
+                            JOptionPane.showMessageDialog(this, "!!!Se agregó la Vacuna correctamente!!!");
+                            ctMarca.setText("");
+                            ctTipo.setText("");
+                            ctNumeroSerie.setText("");
+                            ctCantidad.setText("");
+                            atDosis.setText("");
+
+                        } else{
+                            JOptionPane.showMessageDialog(this, "!!!Inserción fallida!!!");
+                        }
+                    } else{
+                        JOptionPane.showMessageDialog(this, "!!!Conexión con la Base de Datos Fallida!!!");
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(AgregarVacunas.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else{
+                JOptionPane.showMessageDialog(this, "Por favor ingrese todos los datos");
+            }
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Los datos no corresponden con su tipo de dato");
+        }
+        
+
+    }//GEN-LAST:event_btnAgregarVacunaActionPerformed
+
     /**
      * @param args the command line arguments
      */
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea atDosis;
+    private javax.swing.JButton btnAgregarVacuna;
+    private javax.swing.JTextField ctCantidad;
+    private javax.swing.JTextField ctMarca;
+    private javax.swing.JTextField ctNumeroSerie;
+    private javax.swing.JTextField ctTipo;
     private javax.swing.JPanel exitBtn;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblExit;
+    private javax.swing.JLabel lblTituloVacunas;
     // End of variables declaration//GEN-END:variables
 }

@@ -17,13 +17,12 @@ public class MenuProfesional extends javax.swing.JFrame {
     /**
      * Creates new form MenuProfesional
      */
-    
     private static GestionarProfesional gestionarProfesional;
     private static GestionarPropietario gestionarPropietario;
     private int xMouse, yMouse;
     private final BaseDatos bd;
     private Login login;
-    
+
     public MenuProfesional() {
         initComponents();
         rsscalelabel.RSScaleLabel.setScaleLabel(lblAvatar, "src/Vista/Imagenes/AvatarVeterinario.png");
@@ -404,20 +403,20 @@ public class MenuProfesional extends javax.swing.JFrame {
 
     private void lblGestionarProfesionalesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGestionarProfesionalesMouseClicked
         bd.mostrarProfesionales(tblEntidades);
-        
+
         btnBuscar.setVisible(true);
         txtBuscar.setVisible(true);
         btnAgregarEntidad.setText("Agregar Profesional");
-        
+
         tblPanel.setVisible(true);
         btnAgregarEntidad.setVisible(true);
 
         btnActualizar.setBounds(202, 620, 170, 39);
         btnActualizar.setVisible(true);
-        
+
         panelFondo.revalidate();
         panelFondo.repaint();
-        
+
     }//GEN-LAST:event_lblGestionarProfesionalesMouseClicked
 
     private void lblGestionarProfesionalesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGestionarProfesionalesMouseEntered
@@ -436,8 +435,8 @@ public class MenuProfesional extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCerrarSesionMouseEntered
 
     private void lblCerrarSesionMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCerrarSesionMouseExited
-         btnConfiguraciones.setBackground(new Color(110, 77, 0));
-         lblCerrarSesion.setForeground(Color.WHITE);
+        btnConfiguraciones.setBackground(new Color(110, 77, 0));
+        lblCerrarSesion.setForeground(Color.WHITE);
     }//GEN-LAST:event_lblCerrarSesionMouseExited
 
     private void lblExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExitMouseClicked
@@ -481,7 +480,7 @@ public class MenuProfesional extends javax.swing.JFrame {
 
         panelFondo.revalidate();
         panelFondo.repaint();
-        
+
     }//GEN-LAST:event_lblGestionarPropietariosMouseClicked
 
     private void lblGestionarPropietariosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGestionarPropietariosMouseEntered
@@ -499,7 +498,7 @@ public class MenuProfesional extends javax.swing.JFrame {
         this.setVisible(false);
         login = new Login();
         login.setVisible(true);
-        
+
     }//GEN-LAST:event_lblCerrarSesionMouseClicked
 
     private void btnActualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarMouseClicked
@@ -527,16 +526,19 @@ public class MenuProfesional extends javax.swing.JFrame {
     }//GEN-LAST:event_lblBuscarMouseExited
 
     private void lblBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBuscarMouseClicked
-        String nameTable = "";
-        
-        if(btnAgregarEntidad.getText().equals("Agregar Propietario")){
+        String textoBusqueda = txtBuscar.getText();
+        String nameTable;
+
+        if (btnAgregarEntidad.getText().equals("Agregar Propietario")) {
             nameTable = "propietarios";
-            bd.buscarEntidad(tblEntidades, txtBuscar.getText(), nameTable);
-        }else{
+        } else if (btnAgregarEntidad.getText().equals("Agregar Profesional")) {
             nameTable = "profesionales";
-            bd.buscarEntidad(tblEntidades, txtBuscar.getText(), nameTable);
+        } else {
+            nameTable = "pacientes";
         }
-        
+
+        bd.buscarEntidad(tblEntidades, textoBusqueda, nameTable);
+
     }//GEN-LAST:event_lblBuscarMouseClicked
 
     private void lblGestionarPacientesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGestionarPacientesMouseEntered
@@ -557,21 +559,21 @@ public class MenuProfesional extends javax.swing.JFrame {
         btnBuscar.setVisible(true);
         txtBuscar.setVisible(true);
         tblPanel.setVisible(true);
+        btnAgregarEntidad.setText("Agregar Pacientes");
         btnAgregarEntidad.setVisible(false);
 
         panelFondo.revalidate();
         panelFondo.repaint();
-        
+
     }//GEN-LAST:event_lblGestionarPacientesMouseClicked
 
     private void btnAgregarEntidadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarEntidadMouseClicked
 
         //Configurar el botón para que identifique cuándo se muestran los propietarios y los profesionales.
-
-        if(btnAgregarEntidad.getText().equals("Agregar Profesional")){
+        if (btnAgregarEntidad.getText().equals("Agregar Profesional")) {
             gestionarProfesional = new GestionarProfesional();
             gestionarProfesional.setVisible(true);
-        } else{
+        } else {
             gestionarPropietario = new GestionarPropietario();
             gestionarPropietario.setVisible(true);
         }
