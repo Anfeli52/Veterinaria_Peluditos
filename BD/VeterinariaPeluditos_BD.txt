@@ -99,7 +99,7 @@ CREATE TABLE vacunas (
 	dosis TEXT NOT NULL,
 	tipo VARCHAR(30) NOT NULL,
 	marca VARCHAR(30) NOT NULL,
-	fecha_aplicacion DATETIME NOT NULL
+	fecha_aplicacion DATE NOT NULL
 );
 
 CREATE TABLE examenes (
