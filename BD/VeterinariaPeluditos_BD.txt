@@ -116,11 +116,5 @@ CREATE TABLE consultas_examenes (
 	FOREIGN KEY(id_consulta) references consultas(id)
 );
 
-#DROP DATABASE IF EXISTS veterinaria_corp;
-
-#SELECT * FROM pacientes;
-
-#DELETE FROM pacientes WHERE numero_id = 1;
-
 #Correo y Contraseña del Admin
-#INSERT INTO profesionales VALUES(111, "CC", "Andrés Medina", "Calle 123", "andres@gmail.com", 1111, "2025-05-11", "papita123");
+INSERT INTO profesionales VALUES(111, "CC", "Andrés Medina", "Calle 123", "andres@gmail.com", 1111, "2025-05-11", "papita123");

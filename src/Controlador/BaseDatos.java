@@ -18,6 +18,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JTable;
@@ -174,7 +176,7 @@ public class BaseDatos {
                 Object[] filaVacia = new Object[9];
                 filaVacia[0] = "No hay datos registrados";
                 for (int i = 1; i < filaVacia.length; i++) {
-                    filaVacia[i] = ""; // o null
+                    filaVacia[i] = "";
                 }
                 tableModel.addRow(filaVacia);
 
@@ -205,7 +207,7 @@ public class BaseDatos {
 
         try {
             nameTable = "pacientes";
-            //Agregar mediante una SUBCONSULTA, el número de mascotas que tiene cada propietario registrado, ya que si es propietario, quiere decir que tiene al menos una mascota.
+            
             String sqlString = "SELECT numero_id, nombre, sexo, especie, caracteristicas_particulares, enfermedades_base, numero_documento_propietario, (SELECT count(*) "
                     + "FROM vacunas WHERE vacunas.numero_id_paciente = pacientes.numero_id) as cantidad_vacunas FROM " + nameTable;
             Statement stm;
@@ -253,11 +255,10 @@ public class BaseDatos {
                     Object[] fila = new Object[10];
                     fila[0] = "No hay datos registrados";
                     for (int i = 1; i < fila.length; i++) {
-                        fila[i] = null; // Asegurate de que no haya botones ni Strings
+                        fila[i] = null;
                     }
                     tableModel.addRow(fila);
-
-                    // No configurar renderizadores ni editores si no hay datos
+                    
                     tablaPacientes.setModel(tableModel);
                     return;
                 }
@@ -499,7 +500,6 @@ public class BaseDatos {
 
             tabla.setModel(tableModel);
 
-            // Asignar renderers y editores para los botones
             if (nameTable.equals("pacientes")) {
                 tabla.getColumnModel().getColumn(8).setCellRenderer(new Boton());
                 tabla.getColumnModel().getColumn(8).setCellEditor(new BotonAgregar(tabla, nameTable));
@@ -523,19 +523,52 @@ public class BaseDatos {
         String sqlString;
 
         try {
-            if (nameTable.equals("pacientes")) {
+            if (nameTable.equals("propietarios")) {
+                String queryPacientes = "SELECT numero_id FROM pacientes WHERE numero_documento_propietario = ?";
+                List<Long> idsPacientes = new ArrayList<>();
+                try (PreparedStatement pstmt = dbConnection.prepareStatement(queryPacientes)) {
+                    pstmt.setLong(1, idEntidad);
+                    ResultSet rs = pstmt.executeQuery();
+                    while (rs.next()) {
+                        idsPacientes.add(rs.getLong("numero_id"));
+                    }
+                }
+                for (Long idPaciente : idsPacientes) {
+                    String deleteVacunas = "DELETE FROM vacunas WHERE numero_id_paciente = ?";
+                    try (PreparedStatement pstmtVac = dbConnection.prepareStatement(deleteVacunas)) {
+                        pstmtVac.setLong(1, idPaciente);
+                        pstmtVac.executeUpdate();
+                    }
+                    String deletePaciente = "DELETE FROM pacientes WHERE numero_id = ?";
+                    try (PreparedStatement pstmtPac = dbConnection.prepareStatement(deletePaciente)) {
+                        pstmtPac.setLong(1, idPaciente);
+                        pstmtPac.executeUpdate();
+                    }
+                }
+                sqlString = "DELETE FROM propietarios WHERE numero_documento = ?";
+                try (PreparedStatement pstmtProp = dbConnection.prepareStatement(sqlString)) {
+                    pstmtProp.setLong(1, idEntidad);
+                    pstmtProp.executeUpdate();
+                }
+
+            } else if (nameTable.equals("pacientes")) {
                 String deleteVacunas = "DELETE FROM vacunas WHERE numero_id_paciente = ?";
                 try (PreparedStatement pstmtVacunas = dbConnection.prepareStatement(deleteVacunas)) {
                     pstmtVacunas.setLong(1, idEntidad);
                     pstmtVacunas.executeUpdate();
                 }
                 sqlString = "DELETE FROM pacientes WHERE numero_id = ?";
+                try (PreparedStatement pstmt = dbConnection.prepareStatement(sqlString)) {
+                    pstmt.setLong(1, idEntidad);
+                    pstmt.executeUpdate();
+                }
+
             } else {
                 sqlString = "DELETE FROM " + nameTable + " WHERE numero_documento = ?";
-            }
-            try (PreparedStatement pstmt = dbConnection.prepareStatement(sqlString)) {
-                pstmt.setLong(1, idEntidad);
-                pstmt.executeUpdate();
+                try (PreparedStatement pstmt = dbConnection.prepareStatement(sqlString)) {
+                    pstmt.setLong(1, idEntidad);
+                    pstmt.executeUpdate();
+                }
             }
 
         } catch (SQLException e) {
